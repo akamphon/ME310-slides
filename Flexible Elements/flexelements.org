@@ -1,0 +1,553 @@
+#+TITLE: Flexible Mechanical Elements
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil date:nil
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: blood
+#+REVEAL_TRANS: none
+#+REVEAL_EXTRA_CSS: local.css
+
+#+OPTIONS: H:2
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: lualatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+* Flexible Mechanical Elements
+
+** What are Flexible Mechanical Elements
+
+- belts
+- ropes
+- chains
+
+- used in transmission of power over long distances
+
+** Why Flexible?
+
+#+ATTR_REVEAL: :frag (none roll-in none)
+- Torque capacity: Gears > Belts, Ropes, Chains
+- Flexible elements are better against vibration and shock loads
+- Important to check for wear, age, and loss of elasticity
+
+* Belts -- General
+
+** Types of Belts -- Flat Belts
+
+[[./pictures/flat-belt.png]]
+
+** Types of Belts -- V Belts
+[[./pictures/v-belts.png]]
+
+** Types of Belts -- Timing Belts
+[[./pictures/timing-belt.jpg]]
+
+** Belt - Pulley Geometry
+
+#+ATTR_HTML: :width 50%
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./pictures/belt-pulley-geometry.png]]
+\vspace{-0.5cm}
+\begin{align*}
+    \theta_d &= \pi - 2 \sin^{-1} \frac{D - d}{2C} \\
+    \theta_D &= \pi + 2 \sin^{-1} \frac{D - d}{2C} \\
+    L &= \sqrt{ 4C^2 - (D - d)^2 } + \frac{1}{2}(D \theta_D + d \theta_d)
+\end{align*}
+
+** Cross Belt - Pulley Geometry
+
+#+ATTR_HTML: :width 50%
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./pictures/cross-belt-pulley-geometry.png]]
+\vspace{-0.5cm}
+\begin{align*}
+    \theta_d &= \pi + 2 \sin^{-1} \frac{D + d}{2C} \\
+    L &= \sqrt{ 4C^2 - (D + d)^2 } + \frac{1}{2}(D + d)\theta
+\end{align*}
+
+* Flat Belts
+
+** Flat Belts
+
+Uses: light-duty + long-distance power transmission
+
+Strength:
+- High performance (less friction involved)
+- Easy to install
+- Flat surface means less wear and energy loss from friction
+
+Weakness:
+- Need high belt tension
+- Shortened bearing life
+- Tendency to climb
+
+** Flat Belt Assembly
+
+- Typically paired with crowned pulleys
+- Keep belt centered
+
+#+ATTR_LATEX: :height 0.8\textheight
+ [[./pictures/crowned-pulley.jpg]]
+
+# ** Belt Tension
+#
+# - For low speed belt drive
+#
+# \begin{align*}
+#     \frac{F_1}{F_2} = e^{\mu \theta}
+# \end{align*}
+#
+# - Centrifugal force is neglibible
+
+** Belt Tension
+
+- For high speed belt drive
+
+    \begin{align*}
+        \frac{F_1 - F_c}{F_2 - F_c} = e^{\mu \theta}
+    \end{align*}
+
+    where $F_c = m \omega^2 r^2$ is the centrifugal force on the belt
+    and $m$ is the *mass per length* of belt
+
+** Force Balance on Pulley
+
+#+ATTR_LATEX: :height 0.5\textheight
+[[./pictures/forces-on-pulley.png]]
+
+\begin{align*}
+  F_{1} - F_{2} &= \frac{2T}{d} \\
+  F_{1} + F_{2} &= 2F_{i} + 2F_{c} \\
+  F_{i} &= \frac{F_{1} + F_{2}}{2} + F_{c}
+\end{align*}
+
+** Initial Belt Tension $F_{i}$
+
+\begin{align*}
+  \frac{F_{i}}{T/d} &= \frac{(F_{1} + F_{2})/2 - F_{c}}{(F_{1} - F_{2})/2} = \frac{F_{1} + F_{2} - 2F_{c}}{F_{1} - F_{2}} \\
+                    &= \frac{(F_{1} - F_{c}) + (F_{2} - F_{c})}{(F_{1} - F_{c}) - (F_{2} - F_{c})} \\
+                    &= \frac{(F_{1} - F_{c})/(F_{2} - F_{c}) + 1}{(F_{1} - F_{c})/(F_{2} - F_{c}) - 1} \\
+                    &= \frac{e^{\mu\theta} + 1}{e^{\mu\theta} - 1} \\
+  F_{i} &= \frac{T}{d}\frac{e^{\mu \theta} + 1}{e^{\mu \theta} - 1}
+\end{align*}
+
+- Note: $F_{i} = 0 \rightarrow T = 0$
+
+** Tight and Slack Side Tensions
+
+\begin{align*}
+  F_{1} &= F_{c} + F_{i} + \frac{T}{d} = F_{c} + F_{i} + F_{i} \frac{e^{\mu\theta} - 1}{e^{\mu\theta} + 1} \\
+        &= F_{c} + F_{i}\frac{\left( e^{\mu\theta} + 1 + e^{\mu\theta} - 1 \right)}{e^{\mu\theta} + 1} \\
+        &= F_{c} + F_{i}\frac{2e^{\mu\theta}}{e^{\mu\theta} + 1} \\
+  F_{2} &= F_{c} + F_{i}\frac{2}{e^{\mu\theta} + 1} \\
+\end{align*}
+
+- Power transmitted
+
+  $$H = (F_1 - F_2) v$$
+
+# ** Maintaining Belt Tension
+#
+# [[./pictures/belt-tensioner.jpg]]
+
+** Belt Design
+
+\begin{align*}
+    (F_1)_a &= b F_a C_p C_v \\
+\end{align*}
+\begin{align*}
+    \left( F_1 \right)_a &= \text{allowable largest tension} \\
+    b &= \text{belt width} \\
+    F_a &= \text{manufacturer's allowed tension per width (N/m)} \\
+    C_p &= \text{pulley correction factor} \\
+    C_v &= \text{velocity correction factor = 1 except leather belts}
+\end{align*}
+
+** Manufacturer's Allowed Tension: $F_a$
+
+#+ATTR_HTML: :width 80%
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/belt-allowable-tension.png]]
+
+** Pulley Correction Factor: $C_p$
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/pulley-correction-factor.png]]
+
+- $C_p$ = 1 for urethane belts
+
+** Velocity Correction Factor: $C_v$
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/velocity-correction-factor.png]]
+
+- $C_v$ = 1 for polyamide and urethane belts
+
+** Example: Flat belt design
+
+A polyamide A-3 flat belt 15 cm wide is used to transmit 15 hp power. The pulley rotational axes are parallel, the shafts are 2.5 m apart. The driving pulley diameter is 15 cm and rotates at 1750 rpm. The driven pulley diameter is 45 cm.
+
+1. Estimate the centrifugal tension $F_c$
+2. Determine the required initial tension $F_{i}$
+3. Estimate the allowable $F_1$ and $F_2$
+# 4. Determine $N_s$
+
+** Solution: Flat belt design (1)
+
+Find $F_c$
+
+   \begin{align*}
+   \gamma &= 11.4 \text{ kN/m}^3 \\
+   \rho &= \frac{\gamma}{g} = 11.4 \times 10^3 / 9.81 = 1.162 \times 10^3 \text{ kg/m}^3 \\
+   m &= \rho A = 1.162 \times 10^3 (3.3 \times 10^{-3})(0.15) = 0.575 \text{ kg/m} \\
+   F_c &= m \omega^2 r^2 = 0.575 \times (1750 (2\pi/60))^2 (0.15/2)^2 = 108.6 \text{ N}
+   \end{align*}
+
+** Solution: Flat belt design (2)
+
+First, find $\theta$ on the smaller pulley (smaller pulley = smaller angle)
+\begin{align*}
+    \theta_{d} &= \pi - 2\sin^{-1}\frac{D-d}{2C} \\
+               &= \pi - 2\sin^{-1}\frac{45 - 15}{2(250)} \\
+               &= 3.02 \text{ rad}
+\end{align*}
+
+Next, find input torque $T$
+\begin{align*}
+    T &= \frac{H}{\omega} = \frac{15(746)}{1750\frac{2\pi}{60}} \\
+      &= 61.1 \text{ N-m}
+\end{align*}
+
+** Solution: Flat belt design (2)
+
+Finally,
+\begin{align*}
+    F_{i} &= \frac{T}{d}\frac{e^{\mu\theta} + 1}{e^{\mu\theta} - 1} \\
+          &= \frac{61.1}{0.15}\frac{e^{0.8(3.02)} + 1}{e^{0.8(3.02)} - 1} \\
+          &= 487 \text{ N}
+\end{align*}
+
+** Solution: Flat belt design (3)
+
+For $F_1$ and $F_2$
+
+\begin{align*}
+    F_{1} &= F_{c} + F_{i} \frac{2e^{\mu\theta}}{e^{\mu\theta}+1} \\
+         &= 108.6 + 487\frac{2e^{0.8(3.02)}}{e^{0.8(3.02)}+ 1} \\
+         &= 1003 \text{ N} \\
+    F_{2} &= F_{c} + F_{i} \frac{2}{e^{\mu\theta}+1} \\
+         &= 108.6 + 487\frac{2}{e^{0.8(3.02)}+ 1} \\
+         &= 188.4 \text{ N}
+\end{align*}
+
+# ** Solution: Flat belt design (4)
+#
+# For a belt, safety factor is
+# \begin{align*}
+#     N_{s} &= \frac{(F_{1})_{a}}{F_{1}} \\
+#     (F_{1})_{a} &= bF_{a}C_{p}C_{v} = 0.15(18 \times 10^{3})(0.7)(1) \\
+#                &= 1890 \text{ N} \\
+#     N_{s} &= \frac{1890}{1003} = 1.88
+# \end{align*}
+* V-Belts
+
+** Why V Belts?
+
+- Increased tension forces belt further into groove, providing more friction
+- More friction \rightarrow increased torque capacity, but at lower efficiency and increased rate of wear
+
+** V Belt Application
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/v-belt-applications.png]]
+
+** V Belt Sections
+
+[[./pictures/v-belt-sections.png]]
+
+** V Belt Tension
+
+- Similar equations to flat belts
+- Minor adjustment for groove angle $\beta \approx 40^{\circ}$
+
+    \begin{gather*}
+        T = \left( F_1 - F_2 \right) r \\
+        H = \left( F_1 - F_2 \right) v \\
+        \frac{F_1 - F_c}{F_2 - F_c} = e^{\dfrac{\mu \theta}{\sin (\beta/2)}}
+    \end{gather*}
+
+** V Belt Design Equation
+
+- Determine based on belt speed and power requirement
+
+\begin{align*}
+  N_s = \frac{H_a n}{H K_s}
+\end{align*}
+
+- $N_s$ :: safety factor
+- $H_a$ :: allowable power per belt
+- $n$ :: number of belts
+- $H$ :: actual power = $(F_1 - F_2)v$
+- $K_s$ :: service factor
+
+** Allowable Power ($H_a$) in KW per belt
+
+\vspace{-2mm}
+#+ATTR_HTML: :width 60%
+#+ATTR_LATEX: :width 0.6\textwidth
+[[./pictures/belt-power-rating.png]]
+
+** Service Factor
+
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./pictures/belt-service-factor.png]]
+
+** Example: V Belt Design
+
+A 5-hp gasoline engine is connected to a water pump by v-belt and sheaves at 2000 rpm. The driving sheave has $d$ = 200 mm. Choose a proper belt section and the number of belts for the job with $N_s$ = 1.5.
+
+** Solution: V Belt Design
+
+- Belt speed $v$ is
+  \begin{align*}
+    v &= 2000 \left(\frac{2\pi}{60}\right) (0.2/2) \\
+      &= 20.94 \text{ m/s}
+  \end{align*}
+
+- Gasoline engines are usually classified as 'medium' shock
+
+  \begin{align*}
+    H_{a} &= N_{s} \frac{HK_{s}}{n} \\
+          &= 1.5 \frac{5(746)(1.4)}{1} \\
+          &= 7833 \text{ W} = 7.83 \text{ kW}
+  \end{align*}
+
+** Solution: V Belt Design
+
+- As $d$ =  200 mm, we are limited to sections A, B, and C
+
+- v = 20.94 m/s (round down to 20 m/s) $\rightarrow$ 4th column
+
+- for section C, $d$ = 200, $H_a$ = 4.74 kW $\rightarrow$ 2 belts
+- for section B, $d$ = 200, $H_a$ = 3.74 kW $\rightarrow$ 3 belts
+- for section A, $d$ = 200, $H_a$ = 2.21 kW $\rightarrow$ 4 belts
+
+** Timing Belts
+
+#+REVEAL_HTML: <div style="display:flex;align-items:center;margin:auto;">
+#+REVEAL_HTML: <div style="width:50%">
+[[./pictures/timing-belt.jpg]]
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div style="width:50%">
+- No significant stretch or slip $\rightarrow$ power where speed ratio is important
+- efficiency of 97 - 99%
+- No need for lubrication
+- Quieter than chain drives
+- Same design equations as V-belts
+#+REVEAL_HTML: </div>
+
+# ** Example
+#
+# Design an F-1 polyamide flat belt to connect two shafts. The driving pulley ($d$ = 4 cm) is connected to a 1-kW motor. The driven pulley has $D$ = 8 cm. The shafts are 20 cm apart. The motor rotates at 500 rpm.
+#
+# ** Solution
+#
+# The required belt tension difference is
+#
+# \begin{align*}
+#     P &= \left( F_1 - F_2 \right)v \\
+#     F_1 - F_2 &= \frac{1000}{500\pi(0.04)(1/60)} = 955 \text{ N}
+# \end{align*}
+#
+# ** Solution
+#
+# Actual allowable tension is
+#
+# \begin{align*}
+#     (F_1)_a = b(6000)(0.7)(1) = 4200b \text{ N}
+# \end{align*}
+#
+# Centrifugal tension $F_c$ is
+#
+# \begin{align*}
+#     F_c &= m \omega^2 r^2 \\
+#         &= \frac{9500b(0.0013)}{10} \left( \frac{500(2\pi)}{60} \right)^2 (0.02)^2 \\
+#         &= 1.35b \text{ N}
+# \end{align*}
+#
+# ** Solution
+#
+# Angle on small pulley $\theta_d$ is
+#
+# \begin{align*}
+#     \theta_d &= \pi - 2 \sin^{-1} \frac{D - d}{2C} \\
+#             &= \pi - 2 \sin^{-1} \frac{8 - 4}{2(20)} \\
+#             &= 2.94 \text{ rad}
+# \end{align*}
+#
+# ** Solution
+#
+# \begin{align*}
+#     \frac{(F_1)_a - F_c}{F_2 - F_c} &= e^{\mu \theta} \\
+#     \frac{4200b - 1.35b}{4200b - 955 - 1.35b} &= e^{0.5(2.94)} \\
+#     b &= 0.295 \text{ m}
+# \end{align*}
+#
+# The belt must be at least 29.5 cm in width.
+
+* Roller Chains
+
+** Roller Chain Components
+
+#+ATTR_LATEX: :height 0.9\textheight
+[[./pictures/roller-chain-parts.jpg]]
+
+** Why Roller Chain (Chain Drives)?
+
+- No slip $\rightarrow$ constant ratio
+- Long life
+- Can drive multiple shafts from a single source
+
+** Forces and Powers
+
+- Chain tension only on tight side
+
+  $$ T = \frac{F_{1}D}{2} $$
+  $$ H = Fv $$
+
+** Equations on Roller Chains
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LATEX: :height \textwidth
+[[./pictures/chordal-speed-variation.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+$$ D = \frac{p}{\sin \left( \dfrac{180^{\circ}}{N} \right)} = \frac{p}{\sin \left(\dfrac{\gamma}{2} \right)} $$
+$$ v = N pn $$
+
+- $v$ :: velocity
+- $N$ :: number of sprocket teeth
+- $p$ :: chain pitch
+- $n$ :: sprocket speed [rev/min]
+
+** Chordal Speed Variation
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LATEX: :height \textwidth
+[[./pictures/chordal-speed-variation.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+- max chain exit velocity
+
+  $$ v_{\max} = \pi D n = \frac{\pi n p}{\sin (\gamma/2)} $$
+
+- min chain exit velocity
+
+  $$ v_{\min} = \pi d n = \pi n p \frac{\cos(\gamma/2)}{\sin (\gamma/2)}$$
+
+- decrease $\gamma$ to reduce variation
+
+** Failure Mode
+
+- Because of speed variation and roller components, chains can fail from fatigue and wear
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+[[./pictures/link-plate-failure.jpg]]
+
+Link-plate failure from fatigue
+
+*** Roller limit: wear :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+[[./pictures/roller-wear.jpg]]
+
+Roller wear/fatigue
+
+** Design Criteria
+
+- Roller chains rarely fail because of tensile stress
+- Need to worry more about fatigue and wear on rollers
+- To minimize chordal speed variation. $N \geqslant 17$
+
+** Standard Chain Dimensions
+
+#+ATTR_LATEX: :height 0.9\textheight
+[[./pictures/chain-ansi-dims.png]]
+
+** Power Capacity $H$
+
+- For link-plate limit
+
+# $$ H_1 = 0.003 N_1^{1.08} n_1^{0.9} (39.4p)^{3-2.756p} \text{ kW} $$
+$$ H_1 = 0.004 N_1^{1.08} n_1^{0.9} p^{3-0.07p} \text{ hp} $$
+
+- For roller limit
+
+# $$ H_2 = \frac{746 K_t N_1^{1.5} (39.4p)^{0.8}}{n_1^{1.5}} \text{ kW}$$
+$$ H_2 = \frac{1000 K_t N_1^{1.5} p^{0.8}}{n_1^{1.5}} \text{ hp}$$
+
+- $N_1$ = number of teeth in smaller sprocket
+- $n_1$ = sprocket speed [rev/min]
+- $p$ = pitch of chain [m]
+- $K_t$ = 29 for chain numbers 25,35; 3.4 for 41; and 17 for 40-240
+
+** Roller Chain Rated Capacity in hp (1)
+
+#+ATTR_HTML: :width 80%
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./pictures/chain-rated-capacity.png]]
+
+** Roller Chain Rated Capacity in hp (2)
+
+#+ATTR_HTML: :width 80%
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./pictures/chain-rated-capacity2.png]]
+
+** Example
+
+Pick a roller chain for a motorcycle whose output engine is 15 hp at 1000 rpm. The driving sprocket has 20 teeth and the output has 39 teeth.
+
+** Solution
+
+For 15 hp at 1000 rpm, try ANSI 60. p = 0.75 in
+
+\begin{align*}
+    H_1 &= 0.003(20)^{1.08}(1000)^{0.9}(0.75)^{3-0.07(0.75)} \\
+        &= 21.8 \text{ kW} \\
+    H_2 &= \frac{1000(17)(20)^{1.5}(0.75)^{0.8}}{1000^{1.5}} \\
+        &= 38.2 \text{ kW}
+\end{align*}
+
+This means the chain can deliver the power with the safety factor of 21.8/15 = 1.45
+
+# * Wire Ropes
+#
+# ** Overview
+#
+# #+ATTR_LATEX: :height 0.9\textheight
+# [[./pictures/wire-rope-lay.png]]
+#
+# ** Designation
+#
+# - Wire ropes are designated as 1$\frac{1}{8}$ -in 6 $\times$ 7 haulage rope

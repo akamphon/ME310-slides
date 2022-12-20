@@ -1,0 +1,347 @@
+#+TITLE: Power Transmission System Design
+#+AUTHOR: Sappinandana Akamphon
+
+# #+OPTIONS: toc:nil timestamp:nil num:nil
+# #+OPTIONS: reveal_width:1280 reveal_height:1024
+# #+OPTIONS: reveal_single_file:t
+# #+REVEAL_THEME: blood
+# #+REVEAL_TRANS: none
+
+#+OPTIONS: toc:nil timestamp:nil num:nil H:1 date:nil
+
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \institute{ME TSE}
+# #+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usetikzlibrary{shapes,shapes.geometric}
+
+** What We have Covered So Far
+
+- Shafts
+- Gears
+- Bearings
+- Flexible Elements
+- Power screws
+
+** Final Goal
+
+- Design a power transmission system ...
+
+- with multiple components ...
+
+- that interacts with one another ...
+
+** Where Do We Start?
+
+- Given all the requirements: power, reduction ratio, speed ..
+- Which component should be designed first?
+
+** System design is typically iterative
+
+- Possibly multiple correct solutions
+- Start from input or output
+- Proceed to the rest of the system
+- When contradiction arises, correct it
+- And redesign other parts to fix that mistake
+- Lather, rinse, repeat ...
+
+** Order of Component Design
+
+# 1. Set a global coordinate system
+1. Determine the required $T$, $v$, \omega, $H$, ...
+2. Input - Output \rightarrow gear / chain + sprocket / pulley + belt / power screw
+3. Determine forces on shaft
+4. Shafts \rightarrow what the input and output are mounted on
+5. Determine forces on bearings
+6. Bearings \rightarrow what the shaft made contact with
+7. Determine forces on joints
+8. Joints: springs, bolts, welds, ...
+
+2, 4, 6, 8 \rightarrow already knows \\
+1, 3, 5, 7 \rightarrow need a little dust off
+
+# ** Set a Global Coordinate System
+#
+# - Set a reference coordinate system
+#
+# - All forces, torques, and moments should be defined accordingly
+
+** Determine Required T, V, \omega, H
+
+- Problem usually gives a subset of mass, weight, torque, velocity, acceleration or ...
+
+- Need to determine $F$ and $T$ on shaft depending on mechanism involved
+
+** Forces on Shaft
+
+#+BEGIN_CENTER
+\begin{tikzpicture}[>=latex]
+  \node[draw, cylinder, minimum height=5cm, minimum width=8mm, inner sep=5](shaft){};
+  \draw [thick, ->] (shaft.east) ++ (180:0.2) node(O){} --++ (45:1) node[above right]{$F_{t}$};
+  \draw [thick, ->] (O.center) --++ (90:1) node[above]{$F_{r}$};
+  \draw [thick, ->] (O.center) --++ (0:1) node[right]{$F_{a}$};
+\end{tikzpicture}
+#+END_CENTER
+\normalcolor
+
+2 directions possible:
+
+- Radial Loads: any forces \perp shaft axis ($F_{r}, F_{t}$)
+
+- Axial Loads: any forces \parallel shaft axis
+
+** Determine forces on shaft
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/helical-gear-forces.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+Gears: $F_{a}, F_{t}, F_{r}$
+
+Forces on shaft:
+
+- $F_{a} \rightarrow$ Axial load on shaft
+- $F_{r}$ and $F_{t}$ \perp shaft axis \rightarrow Radial load on shaft = $\sqrt{F_r^{2} + F_t^{2}}$
+
+** Determining forces on shaft
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+
+[[./pictures/forces-on-pulley.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+Pulleys + Belts: $F_{1}, F_{2}$
+
+On shaft:
+
+- $F_{1}, F_{2}$ \perp shaft axis \rightarrow Radial load on shaft \approx $F_{1} + F_{2}$
+
+** Determining forces on shaft
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+[[./pictures/chordal-speed-variation.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+Chain + Sprocket: $F_{1}$
+
+On shaft:
+
+- $F_{1}$ \perp shaft axis \rightarrow Radial load on shaft
+
+** Shaft Design
+
+- Radial load \rightarrow $F_{r}$ \rightarrow bending stress
+- Axial load \rightarrow $F_{a}$ \rightarrow axial stress
+- Torque \rightarrow $T$ \rightarrow torsion
+
+\begin{align*}
+  \frac{1}{N_{s}} &= \frac{\sigma_{ae}}{S_{e}} + \frac{\sigma_{me}}{S_{y}} \\
+  \sigma_{ae} &= \left( \sigma_{a}^{2} + 3 \tau_{a}^{2} \right)^{1/2} \\
+  \sigma_{me} &= \left( \sigma_{m}^{2} + 3 \tau_{m}^{2} \right)^{1/2}
+\end{align*}
+
+** Bearing Design
+
+- Bearing equation needs radial load $F_{r}$ and axial load $F_{a}$
+
+- Determine forces on bearings using equilibrium equations
+
+- Proceed to design bearings using $F_{e}$ derived from $F_{r}$ and $F_{a}$
+
+  \begin{align*}
+    L &= L_R K_r \left( \frac{C}{F_e} \right)^{10/3} \\
+    C &= F_e \left( \frac{L}{K_r L_R} \right)^{0.3}
+  \end{align*}
+
+** Forces on Joints
+
+- Consider forces of components attached to joints
+
+- Use equilibrium equation to determine the forces
+
+** Example
+
+A motor drive is used to operate a well bucket. The maximum water weight the bucket can hold is 100 N. The minimum required speed of the bucket is 50 cm/s. The bucket is held by an unbreakable rope that loops around a 20-cm-radius pulley that is fitted onto the middle of a 1-m shaft.
+
+The shaft is supported by a pair of bearings, one at each end. The input motor provides 100-W at 1200 rpm. The motor can be engaged/disengaged from the shaft with a disc clutch.
+
+\vfill
+
+** Example
+
+Design:
+
+1. Shaft ($N_s$ = 2, $S_y$ = 300 MPa, $S_{ut}$ = 400 MPa, $E$ = 210 GPa)
+2. Disc Clutch ($\mu$ = 0.1)
+3. Bearings
+
+#+BEGIN_EXPORT latex
+\centering
+\begin{tikzpicture}
+  \node[draw, fill=LightGrey, minimum height=3mm, minimum width=3cm](shaft){};
+  \node at (shaft.north west)[anchor=north east, draw, fill=gray!20, minimum height=3cm, minimum width=3mm](lcol){};
+  \node at (shaft.north east)[anchor=north west, draw, fill=gray!20, minimum height=3cm, minimum width=3mm](rcol){};
+  \node at (lcol.south east) [anchor=south west, xshift=5mm, draw, fill=Grey, minimum width=2cm, minimum height=1cm]{well};
+  \node at (shaft.center) [fill=Grey, draw, minimum width=3mm, minimum height=1cm](pulley){};
+\end{tikzpicture}
+#+END_EXPORT
+
+** Solution
+
+Required power = (100 N)(0.5 m/s) = 50 W
+
+So the given motor works, assuming 100% efficiency
+
+Assuming constant speed operation, required torque = 100(0.2) = 20 N-m = Torque on shaft
+
+Force on shaft = Rope tension = 100 N
+
+** Solution
+
+Shaft:
+
+\begin{align*}
+  \sigma_{a} &= \frac{100(1)r}{4(\pi/4)r^{4}} = \frac{31.8}{r^3} \\
+  \sigma_{m} &= 0 \\
+  \tau_{a} &= 0 \\
+  \tau_{m} &= \frac{20(r)}{(\pi/2)r^{4}} = \frac{12.7}{r^3}
+\end{align*}
+
+** Solution
+
+Calculating equivalent amplitude and mean stresses
+\begin{align*}
+  \sigma_{ae} &= \sqrt{\sigma_{a}^{2} + 3 \tau_{a}^{2}} = \frac{31.8}{r^{3}} \\
+  \sigma_{me} &= \sqrt{\sigma_{m}^{2} + 3 \tau_{m}^{2}} = \sqrt{3}\frac{12.7}{r^{3}} = \frac{22}{r^3}
+\end{align*}
+
+Using Soderberg criteria,
+\begin{align*}
+  \frac{1}{N_{s}} &= \frac{\sigma_{ae}}{S_{e}} + \frac{\sigma_{me}}{S_{y}} \\
+  \frac{1}{2} &= \frac{31.8}{r^{3}(0.5)(400 \times 10^{6})} + \frac{22}{r^{3}(300 \times 10^{6})} \\
+  r^{3} &= 4.65 \times 10^{-7} \\
+  r &= 7.75 \times 10^{-3} \text{ m}
+\end{align*}
+
+** Solution
+
+Disc Clutch: $\mu = 0.1$
+
+A clutch -- use wet lining.
+
+#+ATTR_LATEX: :height 0.4\textheight
+[[./pictures/dry-materials.png]]
+
+** Solution
+
+Pick woven material so that $p_{\max}$ = 500 kPa
+
+Take $r_i = 0.6 r_o$, number of disc $N = 1$, safety factor $N_s$ = 2.
+
+\begin{align*}
+  T_{design} &= N_s T = \mu \pi p_{\max} r_i \left( r_o^2 - r_i^2 \right) \\
+  2(20) &= (0.1) \pi (500 \times 10^3) (0.6 r_o) \left( r_o^2 - (0.6r_o)^2 \right) \\
+  r_o &= 0.087 \text{ m}
+\end{align*}
+
+** Solution
+
+Bearings:
+
+Radial force = 100 N
+
+Axial force is calculated from actuating force on clutch
+
+\begin{align*}
+    F &= p_{\max} \pi \left( r_o^2 - r_i^2 \right) \\
+        &= 7609 \text{ N}
+\end{align*}
+
+Use angular contact since large axial load.
+
+\begin{align*}
+  \frac{F_a}{F_r} &= 47.8 \\
+  F_e &= 0.911F_a \\
+                  &= 6932 \text{ N}
+\end{align*}
+
+** Solution
+
+#+ATTR_LATEX: :width 0.7\textwidth
+[[./pictures/bearing-rated-capacity.png]]
+
+No other specifications, so assume reliability factor = 1, required life = $9 \times 10^7$
+
+Application bearings are Xlt(55 mm), lt(35 mm), med(25 mm) = L11, 207, 305
+
+All bearings have larger bore diameter than those required for the shaft. = Any of them works
+
+
+** Solution
+
+Recalculate shaft to account for axial load
+
+\begin{align*}
+  \sigma_{a} &= \frac{100(1)r}{4(\pi/4)r^{4}} = \frac{31.8}{r^3} \\
+  \sigma_{m} &= \frac{7609}{\pi r^2} = \frac{2422}{r^2} \\
+  \tau_{a} &= 0 \\
+  \tau_{m} &= \frac{20(r)}{(\pi/2)r^{4}} = \frac{12.7}{r^3}
+\end{align*}
+
+** Solution
+
+\begin{align*}
+  \sigma_{ae} &= \sqrt{\sigma_{a}^{2} + 3 \tau_{a}^{2}} = \frac{31.8}{r^{3}} \\
+  \sigma_{me} &= \sqrt{\sigma_{m}^{2} + 3 \tau_{m}^{2}} = \sqrt{\left(\frac{2422}{r^2}\right)^2 + 3 \left(\frac{12.7}{r^{3}} \right)^2}
+\end{align*}
+
+Using Soderberg criteria,
+
+\begin{align*}
+  \frac{1}{N_{s}} &= \frac{\sigma_{ae}}{S_{e}} + \frac{\sigma_{me}}{S_{y}} \\
+  \frac{1}{2} &= \frac{31.8}{r^{3}(0.5)(400 \times 10^{6})} + \frac{\sqrt{\left(\frac{2422}{r^2}\right)^2 + 3 \left(\frac{12.7}{r^{3}} \right)^2}}{(300 \times 10^{6})} \\
+\end{align*}
+
+This must be solved analytically: $r$ = 0.008 m = 8.0 mm
+
+** Solution
+
+Check buckling,
+
+\begin{align*}
+  N_s &= \frac{P_{cr}}{F_{comp}} \\
+  P_{cr} &= 2(4782) = \frac{\pi^2 E I}{L_e^2} \\
+  I &= \frac{\pi r^4}{4} = \frac{2(4782)(1)^2}{\pi^2(210 \times 10^9)} \\
+  r &= 8.76 \times 10^{-3} \text{ m}
+\end{align*}
+
+** Summary
+
+- Many more variations of possible answers
+- Different choices of steel, linings, factors will lead to different answers

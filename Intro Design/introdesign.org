@@ -1,0 +1,474 @@
+#+TITLE: Introduction to Engineering Design
+#+SUBTITLE: ME 310: Mechanical Design
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil H:1 title:nil
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: sky
+#+REVEAL_TRANS: slide
+#+REVEAL_EXTRA_CSS: bearings.css
+
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usepackage{pgfplots}
+#+BEAMER_HEADER: \usepackage{multirow}
+#+BEAMER_HEADER: \usepackage{smartdiagram}
+#+BEAMER_HEADER: \pgfplotsset{compat=1.18}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \date{}
+#+BEAMER_HEADER: \usetikzlibrary{patterns,shapes,arrows}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+* Who am I?
+
+  Sappinandana Akamphon \\
+  ENG 421/4 \\
+  sup@engr.tu.ac.th
+
+* What are we covering?
+
+    - Design principles
+    - Power sources and transmission
+    - Joints
+    - Power transmission components
+
+* Expected Skills at the End
+  Analyze and design a simple mechanical power transmission system
+
+* Schedule
+  \small
+  \begin{center}
+    \begin{tabular}{rl}
+      \hline
+      \toprule
+      Week & \multicolumn{1}{c}{Topics} \\
+      \midrule
+      1 & Engineering Design Processes. Safety Factors. \\
+      2 & Review of Mechanics of Materials. Stress Concentration. \\
+      3 & Materials Selection. \\
+      4 & Shafts and Shaft Components. \\
+      5 & Mechanical Springs. \\
+      6 & Welding, Bonding, Permanent Joints. \\
+      7 & Screws, Fasteners, Nonpermanent Joints. \\
+      8 & \textbf{Midterm} \\
+      9 & Rolling-Contact Bearings. \\
+      10 & Lubrication and Journal Bearings. \\
+      11 & Spur and Helical Gears. \\
+      12 & Bevel and Worm Gears. \\
+      13 & Clutches, Brakes, and Couplings. \\
+      14 & Belts, Chains, and Ropes. \\
+      15 & Case Studies \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+* Reading Materials
+
+  - Akamphon. S., 2020, ME 310: Mechanical Design I.
+
+  - Juvinall, R. C., and Marshek, K. M., 2006, Fundamentals of Machine
+    Component Design. 4th Edition, Wiley.
+
+  - Hibbeler, R. C., 1997, Mechanics of Materials, 3rd Edition, Prentice
+    Hall.
+
+  - Shigley, J. E. and C. R. Mischke, 2009, Mechanical Engineering Design.
+    McGraw Hill.
+
+* Grading
+  \begin{center}
+    \begin{tabular}{ll}
+      \toprule
+      Project I progress & 10\% \\
+      Project I & 10\% \\
+      Midterm & 30\% \\
+      Project II progress & 10\% \\
+      Project II & 10\% \\
+      Final & 30\% \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+* Engineering Design
+
+  - Application of science and engineering
+  - Define structure of system in details
+  - Allow manufacturers to be able to make it
+
+* What about Mechanical Design?
+  Mechanical engineers need to define
+
+  - Materials
+  - Dimensions
+  - Shapes
+
+  So that the designed product can function properly
+
+* Engineering Design Processes
+
+#+BEGIN_CENTER
+\smartdiagram[circular diagram:clockwise]{Ask, Research, Imagine, Plan, Create, Test, Improve}
+#+END_CENTER
+
+* Ask: What seems to be the problem?
+
+  - What do you want to make?
+  - Why is it needed?
+  - What is the product supposed to do/not to do?
+
+* Research: More details on the problems and products
+
+
+  - Talk to customers to better understand problems and needs
+  - Conduct independent research get a clearer picture
+  - Look into previous works/products. What works? What doesn't?
+
+* Imagine: Come up with conceptual design
+
+  - Brainstorm ideas
+  - Exchange opinions on different solutions
+
+* Plan: How should we proceed?
+
+  - Check problems, needs, constrains
+  - Evaluate ideas and select the best one
+  - Plan how to move forward
+
+* Create: Make it happen
+
+  - Design the components
+  - Respect constraints and requirements developed earlier
+  - Build prototype and verify
+
+
+* Test: Does it work?
+
+  - Perform analysis and test on prototype
+  - Use in actual operating conditions
+  - Get feed back from customers
+  - Evaluate what needs improvement
+
+
+* Improve: Make it better
+
+  - Redesign and improve based on feedback and tests
+
+
+* Application of Engineering Design: Lawn Mower
+
+  - So many lawn in Thammasat
+  - How do you keep them all nice and tidy?
+
+
+* Scisscors?
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/grass-shears.jpg}
+  \end{center}
+
+* Machete?
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/machete.jpg}
+  \end{center}
+
+* Lawn Mower?
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/lawn-mower.jpg}
+  \end{center}
+
+* Case Study: Grass Cutting Solution
+
+  - Lawn Mowers \(\rightarrow\) fast, but cumbersome
+  - Shears/Machete \(\rightarrow\) slow, portable
+
+
+  \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[>=latex]
+      \draw[->] (0,0) --++ (90:5) node[above left]{Speed};
+      \draw[->] (0,0) --++ (0:5) node[above right]{Portability};
+      \node at (1,3.5) [draw, circle, fill=LightGreen, minimum width=1.5cm, text width=1.5cm, align=center]{Lawn Mower};
+      \node at (3.5,1) [draw, circle, fill=LightGreen, minimum width=1.5cm, text width=1.5cm, align=center]{Grass Shear};
+      \node at (2.25,2.25) [draw, circle, fill=LightGreen, minimum width=1.5cm, text width=1.5cm, align=center]{??};
+    \end{tikzpicture}
+  \end{figure}
+
+* Can we do any better? Something in between?
+
+  - Make one yourself
+
+
+* Defining Key Component
+
+    - What is the most important component in a grass cutting device?
+    - A component that completes the main function
+    - For a grass-cutter device $\rightarrow$ the cutting mechanism
+
+
+* The cutting mechanism... obviously
+
+  - blade, shear, \ldots{}
+
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/mower-blade.jpg}
+  \end{center}
+
+* Key Analysis: Shearing Force
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/cutting.jpg}
+  \end{center}
+
+* Same problem, different approach
+
+  - blade \(\rightarrow\) hard, sharp, but moving slowly
+  - can something softer, but moving fast does the same job?
+
+
+* Fast spinning wires?
+  \begin{center}
+    \includegraphics[width=.8\linewidth]{./pictures/cutter-wire.jpg}
+  \end{center}
+
+* Problem \(\rightarrow\) Component
+
+  - Define what needs to be done
+  - Be specific
+  - Most design problems already have partial solutions
+
+
+* Defining constraints
+
+  - Deadline?
+  - Budget?
+  - Load requirements?
+
+
+* Finding best solution
+
+  - Systematic method
+  - Validate & evaluate possible solutions
+
+
+* FRDPARRC Chart
+
+- FR :: Functional Requirements $\rightarrow$ what job does it have?
+- DP :: Design Parameters $\rightarrow$  what dimensions/shapes/materials does the job?
+- A :: Analysis $\rightarrow$ how would you determine that proper DP?
+- R :: References $\rightarrow$ where do you get that method(s) from?
+- R :: Risks $\rightarrow$ is there any potential problems from your design?
+- C :: Countermeasures $\rightarrow$ how do you solve that potential problem?
+
+* Case Study: Coconut Milk Production
+  \begin{columns}
+    \begin{column}{0.5\columnwidth}
+      \begin{center}
+        \includegraphics[width=.9\linewidth]{./pictures/coconut-orchard.JPG}
+      \end{center}
+    \end{column}
+
+    \begin{column}{0.5\columnwidth}
+      \begin{center}
+        \includegraphics[width=.9\linewidth]{./pictures/coconut-milk.jpg}
+      \end{center}
+    \end{column}
+  \end{columns}
+
+* Current solution: coconut rabbit!?
+  \begin{columns}
+    \begin{column}{0.45\columnwidth}
+      \begin{center}
+        \includegraphics[width=\linewidth]{./pictures/coconut-rabbit.jpg}
+      \end{center} 
+    \end{column}
+
+    \begin{column}{0.45\columnwidth}
+      \begin{center}
+        \includegraphics[width=\linewidth]{./pictures/rabbit-eating-coconut.jpg}
+      \end{center}
+    \end{column}
+  \end{columns}
+
+
+
+* Develop idea through FRDPARRC chart
+
+  - Goal: obtain scraped/minced coconut meat for squeezing into coconut milk
+
+  \begin{center}
+    \begin{tabular}{lll}
+      \hline
+      FR & Scrape meat & Pulverize meat + shell\\
+      \hline
+      DP & Scraper & Grinder\\
+      \hline
+      A & Strength of meat & Strength of shell + meat\\
+         & Beam bending & Grinding teeth strength\\
+      \hline
+      R & Mechanics of Materials & Mechanics of Materials\\
+         & Statics & Statics\\
+      \hline
+      R & Scraper teeth broken & Stuck grinder\\
+      \hline
+      C & Additional focus on teeth strength & Check clearance\\
+      \hline
+    \end{tabular}
+  \end{center}
+
+* Final Products
+  \begin{columns}
+    \begin{column}{0.5\columnwidth}
+      \begin{center}
+        \includegraphics[width=.9\linewidth]{./pictures/coconut-scraper.png}
+      \end{center}
+    \end{column}
+
+    \begin{column}{0.5\columnwidth}
+      \begin{center}
+        \includegraphics[width=.9\linewidth]{./pictures/coconut-grinder.png}
+      \end{center}
+    \end{column}
+  \end{columns}
+
+* Major Design Considerations
+
+  - Strength
+  - Deformation
+  - Uncertainty
+
+
+* Strength vs Stress
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/strength-stress.jpg}
+  \end{center}
+  \begin{equation*}
+    strength < stress \rightarrow failure
+  \end{equation*}
+
+* Deformation
+  \begin{center}
+    \includegraphics[width=.9\linewidth]{./pictures/deformed-beam.jpg}
+  \end{center}
+
+* How sure are you about \ldots{}
+
+  - your design calculation(s)?
+
+
+  - your supplier specifications?
+
+
+  - your customer knowledge?
+
+
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{./pictures/overloaded-truck.jpg}
+  \end{center}
+
+* Safety Factor!
+  \alert{What is that?}
+
+* Safety Factor
+  Component should be stronger than the required stress
+
+
+  - The stronger, the safer it is
+
+  $$ N_s = \frac{\text{Strength}}{\text{Stress}} $$
+  - ``Strength'' and ``Stress'' depend on material and criterion in consideration
+
+
+* The Safer, The Better \ldots right?
+  The bigger safety factor, the safer your component is
+
+  So why don't we design everything with a N\(_{\text{s}}\) = 100000
+
+* Too Much of a Good Thing
+  Is there a cost for \emph{excessive} safety factor?
+
+* Total Safety Factor
+
+
+    - A choice of safety factor is a combination of mainly two considerations
+
+        - design and usage conditions: how \underline{well} something should be design and manufactured and how \underline{badly} it will be treated.
+        - economic and safety factors: how bad it is going to be when it fails.
+
+  
+
+  \begin{align*}
+   N_s = N_{s, cond} N_{s, econ}
+  \end{align*}
+
+* Design and Condition Safety Factors, $N_{s,cond}$
+  \begin{center}
+    \small
+    \begin{tabular}{ll}
+      \toprule
+      Reliable materials, controllable & 1.25 - 1.5\\
+      conditions + loading & \\
+      \midrule
+      Well-known materials, reasonable & 1.5 - 2\\
+      conditions + loading & \\
+      \midrule
+      Average materials, ordinary & 2 - 2.5\\
+      conditions + loading & \\
+      \midrule
+      Lesser-known materials, average & 2.5 - 3\\
+      conditions + loading & \\
+      \midrule
+      Untried materials + average conditions & \\
+      Average materials + unknown conditions & 3 - 4\\
+      \midrule
+      Repeated loading & use \(S_e\)\\
+      \midrule
+      Impact forces & Include impact factor\\
+      \midrule
+      Brittle material (based on \(S_{ut}\)) & Double \(N_s\)\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+* Economic and Safety Safety Factors, $N_{s,econ}$
+  
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{llccc}
+      \toprule
+      \multicolumn{2}{l}{\multirow{2}{2.5cm}{Characteristics}} & \multicolumn{3}{c}{Danger to Personnel} \\
+      \cmidrule{3-5}
+                                                             &          & mild & moderate & severe \\
+      \midrule
+      \multirow{3}{3cm}{Economic Impact} & mild     & 1.0  & 1.2      & 1.4    \\
+                                                             & moderate & 1.0  & 1.3      & 1.5    \\
+                                                             & severe   & 1.2  & 1.4      & 1.6    \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+* Exercise: Design of a Swing Set
+
+** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/swing-set.jpg]]
+
+** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Components: chains, seats, stand structures
+- Draw a conceptual design
+- Fill a FRDPARRC sheet for each component
+- Give a safety factor + reasoning

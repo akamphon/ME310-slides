@@ -1,0 +1,374 @@
+#+TITLE: Power Screws
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil date:nil
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: blood
+#+REVEAL_TRANS: none
+#+REVEAL_EXTRA_CSS: local.css
+
+#+OPTIONS: H:2
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \usepackage{amsmath}
+#+BEAMER_HEADER: \usepackage[mathrm=sym]{unicode-math}
+#+BEAMER_HEADER: \setmathfont{FiraMath-Light}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+* Overview of Power Screws
+
+** What is a Power Screw?
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+[[file:pictures/dvd-drive-screw.jpg]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Accurate screw used to push a nut with load along the screw
+
+- Nut is kept from rotating, so it moves along the screw
+
+- Transform rotation (torque) into linear motion (axial force)
+
+- Similar to screw fasteners, but used for motion rather than clamping
+
+** What is a Power Screw Used for?
+
+[[file:pictures/screw-in-lathe.jpg]]
+
+* Types of Power Screws
+
+** Lead Screws vs Ball Screws
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+caption: Lead Screw
+[[file:pictures/lead-screw-closeup.jpg]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+caption: Ball Screw
+[[file:pictures/ball-screw-closeup.JPG]]
+
+** Lead Screws
+
+#+ATTR_LATEX: :height 0.9\textheight
+[[./pictures/lead-screw.jpg]]
+
+** Lead Screw Geometry
+
+[[file:pictures/screw-thread.jpg]]
+
+** Ball Screws
+
+- Bearing + Lead screw = Ball screw
+
+- Ball screws: recirculating ball bearing, expensive, up to 95%
+  efficiency
+
+  [[file:pictures/ball-screw.png]]
+
+** Ball Screw Geometry
+
+[[file:pictures/ball-screw-geometry.png]]
+
+** Thread Profiles
+
+[[./pictures/thread-types.png]]
+
+** Lead vs Ball Screws
+
+#+ATTR_LATEX: :booktabs t
+|----------------------------+----------------------|
+| Lead                       | Ball                 |
+|----------------------------+----------------------|
+| Inexpensive + Less complex | More efficient       |
+| Self-locking               | Lower temperature    |
+| More quiet                 | Lubrication required |
+
+* Installation
+
+** Mounting
+
+[[./pictures/thrust-bearing.jpg]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+#+ATTR_LATEX: :height 0.5\textheight
+[[./pictures/thrust-bearing-detailed.png]]
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+- Power screws should be mounted with bearings that can take thrust (axial) loads
+
+** Mounting II
+
+- For heavy loads, linear bearings may be needed
+
+[[./pictures/screw-mounting.jpg]]
+
+* Power Screws Analysis
+
+** Forces on Power Screws
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/screw-forces.jpg]]
+
+#+BEGIN_EXPORT latex
+\begin{figure}
+  \begin{tikzpicture}[>=latex]
+    \draw [->, ultra thick] (0,0) --++ (0:3) node(right){} node[midway, below]{$\pi d$};
+    \draw [->, ultra thick] (right.center) --++ (90:2) node(top){} node[midway, right]{$l$};
+    \draw [->, dashed] (0,0) -- (top.center);
+    \node [xshift=0.7cm, yshift=0.2cm]{$\lambda$};
+  \end{tikzpicture}
+\end{figure}
+\normalcolor
+#+END_EXPORT
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.5
+:END:
+
+\begin{align*}
+  F_{t} &= F \cos \phi_{n} \sin \lambda + \mu F \cos \lambda \\
+  F_{r} &= F \sin \phi_{n} \\
+  F_{a} &= F \cos \phi_{n} \cos \lambda - \mu F \sin \lambda
+\end{align*}
+
+\begin{align*}
+  % x = \frac{p \theta}{2\pi} \\
+  \tan \lambda = \frac{v_{nut}}{v_{shaft}} = \frac{l}{\pi d}
+\end{align*}
+
+- $\lambda$ :: lead angle
+- $l$ :: screw lead (pitch)
+- $d$ :: screw diameter
+
+** Power Screw Efficiency
+
+- Input and output power
+
+  \begin{align*}
+    H_{in} &= F_{t} v_{shaft} = T_{shaft}\omega_{shaft} \\
+    H_{out} &= F_{a} v_{nut}
+  \end{align*}
+
+  \begin{align*}
+    \eta &= \frac{F_{a}v_{nut}}{F_{t}v_{shaft}} = \frac{F_{nut}v_{nut}}{T_{shaft}\omega_{shaft}} \\
+    \eta_{raise} &= \frac{\cos \phi_{n} \cos \lambda - \mu \sin \lambda}{\cos \phi_{n} \sin \lambda + \mu \cos \lambda} \tan \lambda \\
+         &= \frac{\cos \phi_{n} - \mu \tan \lambda}{\cos \phi_{n} + \mu \cot \lambda} \\
+    \eta_{lower} &= \frac{\cos \phi_{n} + \mu \tan \lambda}{\cos \phi_{n} - \mu \cot \lambda}
+  \end{align*}
+
+** Required Torque
+
+  \begin{align*}
+    T_{raise} &= \frac{F_{nut}v_{nut}}{\omega_{shaft}} \frac{\cos \phi_{n} + \mu \cot \lambda}{\cos \phi_{n} - \mu \tan \lambda} \\
+              &= \frac{F_{nut}v_{nut}}{v_{shaft}/(d/2)} \frac{\cos \phi_{n} + \mu \cot \lambda}{\cos \phi_{n} - \mu \tan \lambda} \\
+              &= \frac{F_{nut}d \tan \lambda}{2} \frac{\cos \phi_{n} + \mu \cot \lambda}{\cos \phi_{n} - \mu \tan \lambda} \\
+    T_{lower} &= \frac{F_{nut}d \tan \lambda}{2} \frac{\cos \phi_{n} - \mu \cot \lambda}{\cos \phi_{n} + \mu \tan \lambda} \\
+  \end{align*}
+
+  - set $F_{nut} = F$ to determine required torque
+
+** Required Torque II
+
+- Power screw sizes are usually given in lead $l$, (major) diameter, effective (median) diameter $d$, root (minor) diameter
+
+\begin{align*}
+  \tan \lambda &= \frac{l}{\pi d} \\
+  T_{raise} &= \frac{F_{nut}d \tan \lambda}{2} \frac{\cos \phi_{n} + \mu \cot \lambda}{\cos \phi_{n} - \mu \tan \lambda} \\
+           &= \frac{F_{nut}d}{2} \frac{l}{\pi d} \frac{\cos \phi_{n} + \mu \frac{\pi d}{l}}{\cos \phi_{n} - \mu \frac{l}{\pi d}} \\
+           &= \frac{F_{nut}d}{2} \frac{l \cos \phi_{n} + \mu \pi d}{\pi d \cos \phi_{n} - \mu l} \\
+  T_{lower} &= \frac{F_{nut}d}{2} \frac{l \cos \phi_{n} - \mu \pi d}{\pi d \cos \phi_{n} + \mu l} \\
+\end{align*}
+
+** Self-Locking
+
+- Similar to worm gears
+
+\begin{align*}
+  F_{t} &= F \cos \phi_{n} \sin \lambda - \mu F \cos \lambda \leqslant 0 \\
+  \mu &\geqslant \cos \phi_{n} \tan \lambda
+\end{align*}
+
+- Possible in lead screws (\mu > 0), *NOT* in ball screws (\mu \approx 0).
+- This makes lead screws desirable in vertical application: self-locking prevents weight drop
+
+# - Typical screws: \(\beta\) = 0.25, \(\alpha\) = 30\(^{\circ}\), \(\mu\) = 0.2
+
+ #  \begin{align*}
+ #    \eta_{\text{thread, raise}} &= 0.25 \\
+ #    \eta_{\text{thread, lower}} &= 0.54
+ #  \end{align*}
+
+# ** Forces and Power on Screws 3/3
+#
+# - From conservation of energy (with efficiency \(\eta\))
+#
+#   \begin{align*}
+#     \eta T (2\pi) &= p F \\
+#     \eta_{\text{thrust}} &= \frac{p}{p + \pi \eta_{\text{thread}} \mu D_{\text{thrust}}} \\
+
+#     T &= \frac{Fp}{2\pi \eta_{\text{thread}}} + \frac{F \mu D_{\text{thrust}}}{2} = \frac{Fp}{2\pi \eta_{\text{thread}} \eta_{\text{thrust}}}
+#   \end{align*}
+#
+# - For typical thrust bearing
+#
+#   \begin{align*}
+#     \eta_{\text{thrust}} = 0.4
+#   \end{align*}
+
+# ** Power Screw Stress
+#
+# - Unlike fasteners, power screws have tension + torsion
+#
+# - Thread root is a stress concentration area \(\approx\) 1.5
+#
+#   \begin{gather*}
+#     \sigma = \frac{4F}{\pi D_{\text{root}}^{2}} \hspace{2cm} \tau = \frac{16T}{\pi D_{\text{root}}^{3}} \\
+#     \sigma_{e} = \sqrt{\sigma^{2} + 3\tau^{2}}
+#   \end{gather*}
+
+** Buckling
+
+- Buckling is a common failure in shafts
+
+- Put shafts in TENSION whenever possible
+
+- Power screws can easily generate forces that will buckle them
+
+- Heavy loads should be PULLED, not PUSHED
+
+** Shaft Whirling
+
+- Shafts (or screws) that spins too fast can excite shaft bending
+  (whirling or whip) \(\rightarrow\) bearing failure
+
+  \begin{align*}
+    \omega_{\max} \leqslant 0.8\omega_{1}
+  \end{align*}
+
+** Buckling and Whirling Formula
+
+\begin{align*}
+  \omega_{1} &= k^{2} \sqrt{ \frac{EI}{A\rho L^{4}} } \\
+  P_{cr} &= \frac{cEI}{L^{4}}
+\end{align*}
+
+#+ATTR_LATEX: :booktabs t
+| End conditions   | \(k\) | \(c\) |
+|------------------+-------+-------|
+| cantilevered     |  1.88 |  2.47 |
+| simply supported |  3.14 |  9.87 |
+| fixed-simple     |  3.93 |  20.2 |
+| fixed-fixed      |  4.73 |  39.5 |
+
+** Example: Power Screw Design
+
+We need to drive a 50-kg mass vertically. The selected lead screw has $\mu$ = 0.1, $\phi_n$ = 0$^{\circ}$, $l$ = 2 mm, $d$ = 10 mm, $E$ = 210 GPa. Determine the required torque to drive this mass
+
+** Solution
+
+Required torque is (typically) $T_{raise}$, as it is usually larger.
+
+\begin{align*}
+  T_{raise} &= \frac{F_{nut}d}{2} \frac{l \cos \phi_{n} + \mu \pi d}{\pi d \cos \phi_{n} - \mu l} \\
+            &= \frac{500(0.01)}{2} \frac{0.002(1) + 0.1 \pi (0.01)}{\pi (0.01)(1) - 0.1(0.002)} \\
+            &= 0.412 \text{ N-m}
+\end{align*}
+
+# ** Solution
+#
+# We need to determine the required diameter to satisfy each condition
+#
+# 1. Stress
+# 2. Buckling
+# 3. Critical speed
+
+# ** Solution
+#
+# First, consider stresses
+#
+#    \begin{align*}
+#      F_{nut} &= 5(10) = 50 \text{ N} \\
+#      \sigma &= \frac{50}{\pi d^{2}} \\
+#      T_{shaft} &= \frac{F_{nut}d \tan \lambda}{2} \frac{\cos \phi_{n} + \mu \cot \lambda}{\cos \phi_{n} - \mu \tan \lambda} \\
+#               &= \frac{50d \tan 20}{2} \frac{\cos 0 + 0.1 \cot 20}{\cos 0 - 0.1 \tan 20} \\
+#               &= 12d \text{ N-m} \\
+#     \tau &= \frac{12d (d/2)}{\frac{\pi}{2} (d/2)^{4}} \\
+#          &= \frac{192d}{\pi d^{3}} = \frac{192}{\pi d^{2}}
+#    \end{align*}
+#
+# ** Solution
+#
+#    Using MDET,
+#
+#    \begin{align*}
+#      \sigma_{e} &= \sqrt{\sigma^{2} + 3\tau^{2}} \\
+#                 &= \sqrt{\left(\frac{50}{\pi d^{2}}\right)^{2} + 3 \left(\frac{192}{\pi d^{2}}\right)^{2}} \\
+#                 &= \frac{336}{\pi d^{2}} \\
+#     N_{s} &= \frac{S_{y}}{\sigma_{e}}  \\
+#     \frac{336}{\pi d^{2}} &= \frac{300 \times 10^{6}}{3} \\
+#     d^{2} &= \frac{336}{\pi(100 \times 10^{6})} \\
+#     d &= 0.001 \text{ mm}
+#    \end{align*}
+
+# ** Solution
+#
+# Second, consider buckling
+#
+# \begin{align*}
+#   P_{cr} &= \frac{cEI}{L^{4}} \\
+#         &= \frac{3.14(210 \times 10^{9})((\pi/64) d^{4})}{0.5^{4}} \\
+#         &= 5.18 \times 10^{11}d^{4}
+# \end{align*}
+#
+# Maximum force axial force = lifting force = 50 N
+#
+# \begin{align*}
+#   N_{s} &= \frac{P_{cr}}{F_{nut}} \\
+#   d^{4} &= \frac{3(50)}{5.18 \times 10^{11}} \\
+#      d &= 4.13 \text{ mm}
+# \end{align*}
+#
+# ** Solution
+#
+# Finally, consider critical speed
+#
+# \begin{align*}
+#   \omega_{1} &= k^{2} \sqrt{ \frac{EI}{A\rho L^{4}} } \\
+#             &=
+# \end{align*}

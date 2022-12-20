@@ -1,0 +1,268 @@
+#+TITLE: Bearings
+#+SUBTITLE: ME 310: Mechanical Design
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:t timestamp:nil
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: sky
+#+REVEAL_TRANS: slide
+#+REVEAL_EXTRA_CSS: bearings.css
+
+#+OPTIONS: H:2
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: lualatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \date{}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+* Overview of Bearings
+  #+ATTR_REVEAL: :frag (none none none roll-in)
+
+** What are bearings?
+
+- A feature that allows relative motions between components
+- Linear motions
+- Rotary motions
+
+** Two types of bearings
+
+- Contact: sliding or rolling
+
+- Non-contact: fluid film or magnetic
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :width 0.45\textwidth :center
+[[./pictures/ball-bearing.jpg]]
+#+ATTR_LATEX: :width 0.45\textwidth :center
+[[./pictures/magnetic-bearing.jpg]]
+#+END_CENTER
+
+* Sliding Contact Bearings
+
+** Sliding Contact Bearings
+
+- Commonly used in low- to medium-speed applications
+
+#+ATTR_HTML: :height 50%
+#+ATTR_LATEX: :width 0.7\textwidth
+  [[./pictures/sliding-contact-bearing.jpg]]
+
+- Lubrication is used to reduce wear and friction
+
+** Materials for Sliding Contact Bearing
+
+- Typically hard materials (shaft) on soft (bearing)
+- Materials:
+  - Polymers: nylon is king!
+  - Brass
+  - Ceramics
+- Check on bearing stress
+- Aluminum-on-aluminum is a no-no
+
+** Bearing Contact Pressure
+
+#+ATTR_LATEX: :height 0.6\textheight
+[[./pictures/elastic-cyl-on-cyl-pressure.png]]
+
+\begin{align*}
+    P &= \frac{F}{DL} \\
+    P_{\max} &= \frac{4}{\pi} \frac{F}{DL}
+ \end{align*}
+
+** Sliding Contact Materials: PV Factor
+
+- (P)ressure $\times$ (V)elocity
+- tradeoff in choosing bearing materials
+- higher pressure \rightarrow low speed, and vice versa
+
+** PV Table for Metals
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/pv-metal.png]]
+
+** PV Table for Nonmetals
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/pv-nonmetal.png]]
+
+** Example: Sleeve Bearing for a Low-speed Shaft
+
+A 30-cm long shaft whose diameter $D$ is 3 cm is operated at 1000 rpm. The shaft has a spur gear whose $R_{\text{pitch}}$ = 10 cm mounted in the middle with a bearing at each end. The gear is transferring the power of 1.5 kW. The gear has pressure angle $\theta$ = 20$^{\circ}$. Determine the minimum bearing length $L$ using nylon.
+
+** Solution
+
+First, let us determine the force on the bearing. Since spur gears don't generate any axial load, the forces will simply be the radial + tangential load, perpendicular to the shaft.
+
+\begin{align*}
+    T &= \frac{P}{\omega} \\
+      &= \frac{1500}{1000(2\pi / 60)} = 14.3 \text{ N-m} \\
+    F &= \frac{T}{R_{\text{pitch}} \cos \theta} \\
+      &= \frac{14.3}{0.1 \cos 20^{\circ}} = 152 \text{ N} \\
+\end{align*}
+
+** Solution
+
+Since the gear is mounted in the middle, the force on each bearing is half of the force.
+
+\begin{align*}
+    F_{bearing} = \frac{152}{2} = 76 \text{ N}
+\end{align*}
+
+We can't determine the bearing pressure yet since we don't know the bearing length. We can determine the surface velocity, however.
+
+\begin{align*}
+    v = \omega (D/2) = 1000 (2\pi / 60) (0.03/2) = 1.57 \text{ m/s}
+\end{align*}
+
+** Solution
+
+We double-check that $v < V_{nylon} (1.57 < 3.0)$ so nylon is an acceptable choice. The length of bearing, then should be
+
+\begin{align*}
+    P_{bearing}v &< (PV)_{nylon} \\
+    \frac{F_{bearing}}{DL}v &< 0.11 \times 10^6 \\
+    \frac{76}{0.03L} 1.57 &< 1.1 \times 10^5 \\
+    L &> 0.036 = 3.6 \text{ cm}
+\end{align*}
+
+* Rolling Contact Bearings
+
+** Rolling Elements
+- suitable for medium- to high-speed applications
+- use balls or rollers to avoid friction
+- load: roller $>$ ball
+- friction: ball $<$ roller
+
+** Rolling Element Types
+
+#+REVEAL_HTML: <div style="display:flex;align-items:center;margin:auto;">
+#+REVEAL_HTML: <div style="width:30%">
+# [[./pictures/ball-bearing.jpg]]
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div style="width:30%">
+# [[./pictures/roller-bearing.jpg]]
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div style="width:30%">
+# [[./pictures/needle-roller-bearing.jpg]]
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: </div>
+#+BEGIN_CENTER
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/ball-bearing.jpg]]
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/roller-bearing.jpg]]
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/needle-roller-bearing.jpg]]
+#+END_CENTER
+
+** Radial vs Angular Contact Bearings
+
+[[./pictures/radial-vs-angular.jpg]]
+
+** Bearing Series
+
+[[./pictures/bearing-series.png]]
+
+** Bearing Table
+
+#+ATTR_HTML: :width 70%
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./pictures/bearing-table.png]]
+
+** Bearing Life Requirement
+
+\begin{align*}
+    L &= L_R K_r \left( \frac{C}{F_e} \right)^{10/3} \\
+    C &= F_e \left( \frac{L}{K_r L_R} \right)^{0.3}
+\end{align*}
+
+#+ATTR_HTML: :border 0pt :rules none
+| $L$   | life corresponding to equivalent load $F_e$                  |
+| $L_R$ | life corresponding to rated capacity = 9 $\times$ 10$^7$ rev |
+| $K_r$ | reliability factor                                           |
+| $C$   | rated capacity                                               |
+| $F_e$ | equivalent load                                              |
+
+** Bearing Rated Capacity
+
+[[./pictures/bearing-rated-capacity.png]]
+
+** Reliability Factor
+
+#+ATTR_HTML: :width 50%
+[[./pictures/reliability-factor.png]]
+
+** Equivalent Load
+
+Let $e = F_a / F_r$
+
+for radial ball bearings
+
+\begin{align*}
+    F_e = \left\{
+    \begin{array}{ll}
+        F_r & e < 0.35 \\
+        F_r \left[ 1 + 1.115(e - 0.35) \right] & 0.35 < e < 10 \\
+        1.176 F_a & e > 10
+    \end{array}
+    \right.
+\end{align*}
+
+for angular ball bearings
+
+\begin{align*}
+    F_e = \left\{
+    \begin{array}{ll}
+        F_r & e < 0.68 \\
+        F_r \left[ 1 + 0.87(e - 0.68) \right] & 0.68 < e < 10 \\
+        0.911 F_a & e > 10
+    \end{array}
+    \right.
+\end{align*}
+
+** Typical Bearing Design Life
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/designed-bearing-life.png]]
+
+** Example
+
+Select a radial ball bearing for a shaft intended for a continuous 8-hr-a-day operation at 1800 rpm with 95% reliability. Axial and radial loads are 1.2 kN and 1.5 kN, respectively.
+
+** Solution
+
+- First, we need to calculated $F_e$.
+
+    $$e = \frac{F_a}{F_r} = \frac{1.2}{1.5} = 0.8$$
+
+- For radial ball bearing,
+
+\begin{align*}
+    F_e &= 1500 \left[ 1 + 1.115(0.8 - 0.35) \right] \\
+        &= 2253 \text{ N}
+\end{align*}
+
+** Solution
+
+- Required life for 8-hr-a-day service (assumed every day) = 30000 hrs
+
+- Life in revolutions
+
+    $$L = 1800(30000)(60) = 3.24 \times 10^9 \text{ revolutions}$$
+
+- For 95% reliability $K_r$ = 0.63
+
+\begin{align*}
+    C = 2253 \left( \frac{3.24 \times 10^9}{0.63 (9 \times 10^7)} \right)^{0.3} = 7583 \text{ N} = 7.58 \text{ kN}
+\end{align*}
+
+** Solution
+
+- For extra-light, light, and medium series, the required bore are 55, 35, and 30 mm, respectively
+
+- The models corresponding to the bore are L11, 207, and 306, respectively.

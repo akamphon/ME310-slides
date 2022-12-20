@@ -1,0 +1,192 @@
+\documentclass{beamer}
+ 
+\usepackage[utf8]{inputenc}
+%\usepackage{enumitem}
+%\usepackage{tikz}
+\usepackage{booktabs}
+
+\usepackage{array}
+\usepackage{graphicx}
+
+%%% New column type
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+ 
+%Information to be included in the title page:
+\title{Design of Welded Joints}
+\author{Sappinandana Akamphon}
+\institute{Department of Mechanical Engineering \\
+  Thammasat University}
+\date{}
+ 
+ 
+ 
+\begin{document}
+ 
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+\section{Welding Types}
+
+\begin{frame}
+  \frametitle{Shielded Metal Arc Welding}
+  Electric arc to produce heat
+\end{frame}
+
+\begin{frame}
+  \frametitle{MIG Welding}
+  
+  \begin{itemize}
+  \item uses consumable electrode
+  \item simple to learn
+  \item welds aluminum, nonferrous, and stainless steel
+  \item expensive
+  \item neat but difficult to troubleshoot
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{TIG welding}
+
+  \begin{itemize}
+  \item nonconsumable electrode
+  \item difficult to learn and troubleshoot
+  \item welds almost all materials
+  \item preferred welding in precision and fabrication industry
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Resistance Welding}
+
+  \begin{itemize}
+  \item uses Joules heating ($i^2R$) to generate heat
+  \item often require large current (1000 - 100000 A)
+  \item widespread use in automotive industry
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gas Welding}
+
+  \begin{itemize}
+  \item uses combustion (Acetylene + $O_2$) to generate heat
+  \item slow but cheap
+  \item mainly for maintenance purposes.
+  \end{itemize}
+  
+\end{frame}
+
+\section{Weld Geometry and Terminology}
+
+\begin{frame}
+  \frametitle{Weld type}
+
+  \begin{itemize}
+  \item butt welds
+  \item fillet welds
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Good Welds vs Bad Welds}
+
+
+\end{frame}
+
+\section{Weld Stress Analysis}
+
+\begin{frame}
+  \frametitle{Welding Electrodes}
+
+  \begin{tabular}{ L{3cm} C{2cm} C{2cm} C{2cm} }
+    \toprule
+    AWS Electrode Number & Tensile Strength (MPa) & Yield Strength (MPa) & Percent Elongation \\
+    \midrule
+    E60XX & 427 & 345 & 17-25 \\
+    E70XX & 482 & 393 & 22 \\
+    E80XX & 551 & 426 & 19 \\
+    E90XX & 620 & 531 & 14-17 \\
+    E100XX & 689 & 600 & 13-16 \\
+    E120XX & 827 & 737 & 14 \\
+    \bottomrule
+  \end{tabular}
+  
+\end{frame}
+  
+\begin{frame}
+  \frametitle{Stress in Butt Welds}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stress in Fillet Welds}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stress in weld groups}
+  \begin{itemize}
+  \item Find weld center
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stress in Weld joints under Torsion}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stress in Weld joints under Bending}
+\end{frame}
+
+\section{Welded Joints under Fatigue}
+
+\begin{frame}
+  \frametitle{Weld geometry and Fatigue}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stress concentration factor}
+
+  \begin{tabular}{L{7cm} C{3cm}}
+    \toprule
+    Type of Weld & Fatigue Stress Concentration Factor $K_f$ \\
+    \midrule
+    Reinforced butt weld & 1.2 \\
+    Toe of transverse fillet weld & 1.5 \\
+    End of parallel fillet weld & 2.7 \\
+    T-butt joint with sharp corners & 2.0 \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Fatigue in Welded Joint Example}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exercise}
+\end{frame}
+
+\end{document}
+

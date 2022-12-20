@@ -1,0 +1,526 @@
+#+TITLE: Material Selection
+#+SUBTITLE: ME 310: Mechanical Design
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil H:2 title:nil
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: sky
+#+REVEAL_TRANS: slide
+#+REVEAL_EXTRA_CSS: bearings.css
+
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usepackage{pgfplots}
+#+BEAMER_HEADER: \pgfplotsset{compat=1.18}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \date{}
+#+BEAMER_HEADER: \usetikzlibrary{patterns,shapes,arrows}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+#+BEAMER_HEADER: \definecolor{lightblue}{RGB}{180,220,255}
+
+\frame{\titlepage}
+
+* Overview of Material Selection
+
+** Material Selection
+
+  - Plenty of materials out there
+  - Where do we start?
+  - What are the criteria to consider?
+
+** Material Selection Criteria}
+
+  - Mechanical properties: strength, stiffness, ..
+  - Thermal properties
+  - Costs
+  - etc.
+
+* Engineering Materials}
+
+** Steels
+
+  \centering
+  \includegraphics[height=0.4\textwidth]{pictures/steels}
+
+  - The most used material for machine components
+  - It has been used for very long time, so behaviors are well understood
+  - Compositions, thermal treatment and mechanical treatment can be used to obtain wide range of properties.
+
+
+
+** Basic Steel Selection Criteria}
+
+  - All steels have the same Young's moduli $\rightarrow$ if stiffness is key, then choose the cheapest steel.
+  - Carbon content determines the hardness. More carbon, harder steel.
+
+
+
+** Heat Treatment of Steel Alloy}
+
+  - Parts can be heat-treated to obtain the same hardness with plain carbon steel as with more expensive alloys.
+  - Alloying elements helps hardening. Hardness can be improved with less extreme heat treatments.
+
+  \vspace{0.3cm}
+  \centering
+  \includegraphics[height=0.4\textwidth]{pictures/heat-treatment}
+
+
+
+** Case-Hardening Steels}
+  Hardening of the surface, usually by carburizing, cyaniding, nitriding or induction hardening.
+
+  - Carburizing introduces additional carbon into steel and apply heat treatment.
+  - Cyaniding introduces both carbon and nitrogen.
+  - Nitriding adds nitrogen to the part surface at lower than 1000$^{\circ}$ F or less so there is no risk of warpage.
+  - Induction and flame hardening heat the surface then quench and temper.
+
+** Stainless Steels
+
+  \centering
+  \includegraphics[height=0.5\textwidth]{pictures/stainless-steel}
+
+  - Contains a minimum of 10.5\% chromium.
+  - Heat-resistant and corrosion-resistant.
+  - 3-5 times more expensive
+
+** Iron-based Superalloys
+
+  - For high-temperature applications: gas turbines, jet engines, heat exchangers, furnaces ...
+  - Strength at high temp and resistance to creep, corrosion, and wear.
+
+** Aluminum Alloys
+  \centering
+  \includegraphics[height=0.4\textwidth]{pictures/aluminium-alloy}
+
+  - Slightly weaker but much lighter than steel
+  - Difficult to harden
+  - Lower geometric stabilility than steel.
+  - Much easier to cast and machine.
+
+** Copper Alloy
+
+  - Copper & Brass
+  - Excellent thermal and electrical conductivity. Good resistance to corrosion.
+  - Poor strength.
+
+** Other interesting alloys
+
+  - Magnesium :: Lightest engineering metal.
+  - Nickel :: strong and tough at extreme temperatures.
+  - Titanium :: extremely corrosion-resistance, low thermal conductivity and good strength-weight ratio. Expensive and difficult to machine.
+  - Zinc :: inexpensive. Easy to die-cast. Moderate strength.
+
+
+** Overview of Plastics
+
+  - Polymers form from small \emph{monomers}
+
+  \centering
+  \includegraphics[width=0.9\textwidth]{pictures/polymer}
+
+
+** Plastic Properties
+
+  - More monomers $\rightarrow$ heavier molecules $\rightarrow$ gas, liquid, solid
+  - Side branching leads to less packing and lower density, but also higher geometric stability and stiffness.
+  - Divided on reaction to heat: thermoset (not softening) and thermoplastic (softening)
+
+** Thermoplastics
+
+- Polyester :: Excellent dimensional stability, electrical resistance, and toughness. Poor in outdoor and high temperature useage.
+- Polyethylene :: Lightweight. Easy to process. Inexpensive. Wide variety of grades from LDPE, MDPE, and HDPE. (Water bottle)
+
+  \centering
+  \includegraphics[width=0.45\textwidth]{pictures/nylon}
+  \includegraphics[width=0.45\textwidth]{pictures/polycarbonate} \\
+  \includegraphics[width=0.45\textwidth]{pictures/polyester}
+  \includegraphics[width=0.45\textwidth]{pictures/HDPE}
+
+
+** Thermoplastics II
+
+- Polypropylene :: Outstanding resistance to flex and stress cracking. Lightweight. Low cost. (Plastic bag)
+- Polystyrene :: Low-cost, clear, brittle. (Clear plastic box and covers.)
+- Polyurethane :: Tough, abrasion-resistant, and impact-resistant. (Resin floor coating)
+- PVC :: low cost. Many formulations available. Hard, tough, and good electrical resistance. Good outdoor stability and resistance to moisture.
+
+  \centering
+  \includegraphics[width=0.45\textwidth]{pictures/polypropylene}
+  \includegraphics[width=0.45\textwidth]{pictures/polystyrene} \\
+  \includegraphics[width=0.45\textwidth]{pictures/polyurethane}
+  \includegraphics[width=0.45\textwidth]{pictures/pvc}
+
+
+** Thermoset
+
+- Amino :: Abrasion and chip-resistant. Resistance to solvent. Melamine is hard and has high heat and chemical resistance.
+- Epoxy :: Exceptional mechanical strength and adhesion. (Epoxy glue)
+- Silicone :: Compatible with body tissue. High costs.
+
+  \centering
+  \includegraphics[width=0.4\textwidth]{pictures/melamine}
+  \includegraphics[width=0.4\textwidth]{pictures/epoxy}
+  \includegraphics[width=0.4\textwidth]{pictures/silicone}
+  \includegraphics[width=0.3\textwidth]{pictures/silicone2}
+
+
+** Engineering Ceramics
+
+  \centering
+  \includegraphics[height=0.5\textheight]{pictures/ceramic}
+
+  - Oxides, carbides, and nitrides
+  - Extremely high temperature
+  - High compressive strength, but brittle
+
+** Examples of Engineering Ceramics
+  \centering
+  \includegraphics[width=0.4\textwidth]{pictures/diamond}
+  \includegraphics[width=0.4\textwidth]{pictures/silicon-carbide-disc-brake}
+  \includegraphics[width=0.4\textwidth]{pictures/silicon-nitride-bearing}
+  \includegraphics[width=0.4\textwidth]{pictures/ultra-high-temp}
+
+
+** Engineering Composites
+
+  - Combine strengths of different materials.
+  - CFRP, Steel-reinforced concrete, GFRP, etc.
+  - Typically matrix + fibers
+
+  \centering
+  \includegraphics[height=0.4\textwidth]{pictures/matrix+fiber}
+
+
+** Examples of Composites
+  \centering
+  \includegraphics[width=0.4\textwidth]{pictures/composite-armor}
+  \includegraphics[width=0.4\textwidth]{pictures/application-aerospace1}
+  \includegraphics[width=0.4\textwidth]{pictures/cfrp-case}
+
+* Material Selection Considerations
+
+** Factors
+
+- Availability :: How easy it is to obtain or buy
+- Cost :: Raw material cost
+- Properties :: Strengths and weaknesses
+- Processes :: material - properties - processes are linked
+- Formability :: How easy it is to shape into desired components.
+- Finishing :: Enhance the properties for inexpensive materials.
+
+** Material Selection Charts
+  \centering
+  \includegraphics[height=0.5\textheight]{pictures/wtf}
+
+  - Too many materials to browse through
+  - Needs a way to quickly assess multiple material properties
+  - Material selection charts!
+
+
+
+** Material Selection Charts
+
+  - Invented by M.F. Ashby in 1993, the charts map multiple materials together by their properties.
+  - More details in \emph{Materials selection in mechanical design} (M. F. Ashby)
+  - Bubble charts and bar charts
+
+  \centering
+  \includegraphics[height=0.5\textheight]{pictures/strength-density-diagram}
+  \includegraphics[height=0.5\textheight]{pictures/mat-bar-chart}
+
+
+* Material Selection Procedure
+
+** The procedure
+
+
+  - Establish required service performances
+  - Select a suitable material
+  - Make a final evaluation
+  - Test, a lot of tests
+
+
+
+** Establish Required Performance
+
+  - Determine the operational conditions of the component
+  - Translate into material properties.
+
+  \vspace{1cm}
+  \centering
+  \begin{tikzpicture}[>=latex, every node/.style={fill=LightSkyBlue}]
+    \node [text width=4cm, align=center](A){Beam for swing set \\ deflection $\leq$ 2 cm \\ Max weight = 300 kg};
+    \node [text width=4cm, align=center, xshift=6cm](B){$E$ = 150 GPa \\ $\sigma_y$ = 300 MPa};
+    \draw [ultra thick, ->] (A) -- (B);
+  \end{tikzpicture}
+
+
+** Select a Suitable Material}
+  \centering
+  \begin{tikzpicture}
+    \clip (-4.1,-3) rectangle ++(9,5);
+    \node{\includegraphics[height=\textheight]{pictures/mat-bar-chart}};
+  \end{tikzpicture}
+
+  - Looking through data sheets is not fun
+  - Material charts are much better
+
+
+
+** Make a Final Evaluation}
+
+  - Select the best material for the application
+  - `Best' is the material with the best value, defined simply as the material selection index (SI) where
+    $$ SI = \frac{(\text{availability})(\text{performance})}{\text{total cost}} $$
+
+
+
+** Test, test, and more test}
+
+  - Test in operating conditions.
+  - Do we need more tests?
+  - Reevaluate the risk and uncertainty of chosen material, for example, cost of product failure.
+
+  \centering
+  \begin{tikzpicture}
+    \clip (-4.1,-2) rectangle ++(9,4);
+    \node{\includegraphics[height=0.6\textheight]{pictures/field-test}};
+  \end{tikzpicture}
+
+
+** Example: Minimum Weight Bar}
+  Design a lightest possible tensile bar that can take $F_{\max} = 50000 \text{ N}$. We have 3 material choices.
+  \vspace{5mm}
+
+  \centering
+  \begin{tabular}{lcc}
+    \toprule
+    Material & Density & Yield Strength \\
+    \midrule
+    HSS    & 7800    & 1200 \\
+    Aluminum & 2300    & 400 \\
+    CFRP     & 1500    & 350 \\
+    \bottomrule
+  \end{tabular}
+
+
+** The Hard Way
+  Let's assume $N_s = 2$. The cross-sectional area required for each material is
+
+  \begin{gather*}
+    N_s = \frac{S_y}{\dfrac{F}{A}} \\
+    A = \frac{N_S F}{S_y}
+  \end{gather*}
+
+#+BEGIN_SRC python :results output raw :exports results
+d_st = 7800
+d_al = 2300
+d_cf = 1500
+y_st = 1200*10**6
+y_al = 400*10**6
+y_cf = 350*10**6
+
+N_s = 2
+F = 50000
+
+A_st = N_s * F / y_st
+A_al = N_s * F / y_al
+A_cf = N_s * F / y_cf
+
+print(r'\begin{center}')
+print(r'\begin{tabular}{lc}')
+print(r'\toprule')
+print(r'HSS & %.2e m$^2$ \\' % (A_st))
+print(r'Aluminum & %.2e m$^2$ \\' % (A_al))
+print(r'CFRP & %.2e m$^2$ \\' % (A_cf))
+print(r'\bottomrule')
+print(r'\end{tabular}')
+print(r'\end{center}')
+#+END_SRC
+
+#+RESULTS:
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+HSS & 8.33e-05 m$^2$ \\
+Aluminum & 2.50e-04 m$^2$ \\
+CFRP & 2.86e-04 m$^2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+** Comparing mass
+  Once cross-sectional areas are obtained, mass is just
+
+  \begin{equation*}
+    m = \rho A l
+  \end{equation*}
+
+#+BEGIN_SRC python :results output raw :exports results
+d_st = 7800
+d_al = 2300
+d_cf = 1500
+y_st = 1200*10**6
+y_al = 400*10**6
+y_cf = 350*10**6
+
+N_s = 2
+F = 50000
+
+A_st = N_s * F / y_st
+A_al = N_s * F / y_al
+A_cf = N_s * F / y_cf
+
+m_st = d_st * A_st
+m_al = d_al * A_al
+m_cf = d_cf * A_cf
+
+print(r'\begin{center}')
+print(r'\begin{tabular}{lc}')
+print(r'\toprule')
+print(r'Material & Mass (kg) \\')
+print(r'\midrule')
+print(r'HSS & %.2e $l$ \\' % (m_st))
+print(r'Aluminum & %.2e $l$ \\' % (m_al))
+print(r'CFRP & %.2e $l$ \\' % (m_cf))
+print(r'\bottomrule')
+print(r'\end{tabular}')
+print(r'\end{center}')
+#+END_SRC
+
+#+RESULTS:
+\begin{tabular}{lc}
+\toprule
+Material & Mass (kg) \\
+\midrule
+HSS & 6.50e-01 $l$ \\
+Aluminum & 5.75e-01 $l$ \\
+CFRP & 4.29e-01 $l$ \\
+\bottomrule
+\end{tabular}
+
+  So CFRP is the lightest, regardless of length $l$.
+
+
+** The `Easy' Way
+  Combine the equations for area and mass
+
+  \begin{align*}
+    m &= \rho A l \\
+      &= \rho N_s \frac{F}{S_y} l
+  \end{align*}
+
+  Well, $N_s$, $F$, and $l$ are all given by the problem
+
+
+** Strength - Weight Ratio
+
+  We simply need to determine a single ratio
+  \begin{gather*}
+    m \sim \frac{\rho}{S_y}
+  \end{gather*}
+
+  to identify the lightest material for the application
+
+
+
+** Minimum weight index
+
+  Guideline for strength-based minimum weight design
+
+  \centering
+  \begin{tabular}{l c}
+    \toprule
+    Load condition & Min weight index \\
+    \midrule
+    Tension & $\dfrac{S_y}{\rho}$ \\[10pt]
+    Bending, torsion & $\dfrac{S_y^{2/3}}{\rho}$ \\[10pt]
+    Plate under normal load & $\dfrac{S_y^{1/2}}{\rho}$ \\
+    \bottomrule
+  \end{tabular}
+
+
+** Example: Material for a Gas Turbine Shaft
+  \centering
+  \includegraphics[width=0.5\textwidth]{pictures/gas-turbine-shaft}
+
+  - What material properties should be considered?
+
+      \pause - mass / density
+      \pause - strength
+      \pause - temperature
+      \pause - cost
+
+** Establish required performances
+
+  - Shaft as light as possible
+  - Operating temperature $> 300^{\circ}$C
+  - Cost is not a concern
+
+
+
+** Establish required performances
+
+  - Shaft as light as possible $\rightarrow$ strength - density diagram
+  - Operating temperature $> 300^{\circ}$C $\rightarrow$ strength - temp diagram
+  - Cost is not a concern $\rightarrow$ yay?
+
+
+
+** Can you stand the heat?
+  \centering
+  \begin{tikzpicture}[>=latex]
+    \node(A){\includegraphics[height=0.8\textheight]{pictures/strength-temperature-diagram}}; \pause
+    \draw [dashed, red] (A.south) ++ (180:0.25) --++ (90:7.5) node[midway, left, red]{300 C}; \pause
+    \node at (A.north east) [xshift=-2cm, yshift=-2cm, circle, draw, red, minimum height=2.5cm](C){};
+    \node at (C.south) [below, Blue, text width=3cm, align=center]{Metal alloys and ceramics};
+  \end{tikzpicture}
+
+
+** Minimize the weight
+  \centering
+  \begin{tikzpicture}[>=latex]
+    \node(A){\includegraphics[height=0.8\textheight]{pictures/strength-density-diagram}};
+    \only<1> {
+      \draw [dashed, red] (A.east) ++ (90:0.55) --++ (-145:6) node[midway, right, red]{$\dfrac{S^{2/3}}{\rho} = C_1$};
+    }
+    \only<2> {
+      \draw [->, red] (A.south east) ++ (135:3.5) --++ (135:3);
+      \draw [dashed, red] (A.north) ++ (0:1.3) --++ (-145:6) node[midway, above, red]{$\dfrac{S^{2/3}}{\rho} = C_2$};
+    }
+  \end{tikzpicture}
+
+
+** Combine the results
+
+  - Light shaft $\rightarrow$ ceramics, woods // to grains, composites, and metal alloys
+  - High temperature operation NOT OK $\rightarrow$ woods, composites, Zn, Al, and Mg alloys
+  - Preliminary choices $\rightarrow$ ceramics, Ti, Ni, and Steel alloys
+
+
+
+** Additional evaluations
+
+  - 1st choice - ceramics
+
+    - Hard to machine
+    - Brittle
+
+  - 2nd choice - Ti, Ni, or Steels
+  - Test (simulation or prototype) to obtain final choice
+
+  \centering
+  \includegraphics[height=0.5\textheight]{pictures/turbine-shaft}
+
+
+** :B_fullframe:
+:PROPERTIES:
+:BEAMER_env: fullframe
+:END:
+  \Huge\centering Any Questions?

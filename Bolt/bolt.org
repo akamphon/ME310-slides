@@ -1,0 +1,873 @@
+#+TITLE: Introduction to Engineering Design
+#+SUBTITLE: ME 310: Mechanical Design
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil H:2 title:t
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: sky
+#+REVEAL_TRANS: slide
+#+REVEAL_EXTRA_CSS: bearings.css
+
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usepackage{pgfplots}
+#+BEAMER_HEADER: \usepackage{multirow}
+#+BEAMER_HEADER: \usepackage{wasysym}
+#+BEAMER_HEADER: \usepackage{array}
+#+BEAMER_HEADER: \pgfplotsset{compat=1.18}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \usetikzlibrary{patterns,shapes,arrows,decorations,decorations.pathmorphing,calc}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+#+BEAMER_HEADER: \definecolor{lightblue}{RGB}{180,220,255}
+
+#+BEAMER_HEADER: \tikzset{/pgf/decoration/.cd,
+#+BEAMER_HEADER: head width/.initial=6pt,
+#+BEAMER_HEADER: head length/.initial=1.5pt,
+#+BEAMER_HEADER: thread separation/.initial=1.0pt,
+#+BEAMER_HEADER: thread amplitude/.initial=.meta0.5pt,
+#+BEAMER_HEADER: screw radius/.initial=1.2pt,}
+#+BEAMER_HEADER: % definition of the decoration
+#+BEAMER_HEADER: \pgfdeclaredecoration{screw}{initial}
+#+BEAMER_HEADER: {
+#+BEAMER_HEADER:   \state{initial}[width=\pgfkeysvalueof{/pgf/decoration/head length},%
+#+BEAMER_HEADER:   next state=midd]
+#+BEAMER_HEADER:   {
+#+BEAMER_HEADER:     \def\headlength{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/head length}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     \def\headwidth{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/head width}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     \def\screwradius{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/screw radius}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     % First line
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{0.0pt}{\headwidth/2}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{\headlength}{\headwidth/2}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{\headlength}{\screwradius}}
+#+BEAMER_HEADER:     % Second line
+#+BEAMER_HEADER:     \pgfpathmoveto{\pgfpoint{0.0pt}{0.0pt}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{0.0pt}{-\headwidth/2}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{\headlength}{-\headwidth/2}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{\headlength}{-\screwradius}}
+#+BEAMER_HEADER:   }
+#+BEAMER_HEADER:   \state{midd}[width=\pgfkeysvalueof{/pgf/decoration/thread separation}*2]
+#+BEAMER_HEADER:   {
+#+BEAMER_HEADER:     \def\threadseparation{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/thread separation}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     \def\threadamplitude{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/thread amplitude}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     \def\screwradius{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/screw radius}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     % First line
+#+BEAMER_HEADER:     \pgfpathmoveto{\pgfpoint{0pt}{\screwradius}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{0.5*\threadseparation}{\screwradius+\threadamplitude}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{1.0*\threadseparation}{\screwradius}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{1.5*\threadseparation}{\screwradius-\threadamplitude}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{2.0*\threadseparation}{\screwradius}}
+#+BEAMER_HEADER:     % Second line
+#+BEAMER_HEADER:     \pgfpathmoveto{\pgfpoint{0pt}{-\screwradius}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{0.5*\threadseparation}{-\screwradius-\threadamplitude}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{1.0*\threadseparation}{-\screwradius}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{1.5*\threadseparation}{-\screwradius+\threadamplitude}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{2.0*\threadseparation}{-\screwradius}}
+#+BEAMER_HEADER:     % Thread
+#+BEAMER_HEADER:     \pgfpathmoveto{\pgfpoint{0.5*\threadseparation}{\screwradius+\threadamplitude}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{1.5*\threadseparation}{-\screwradius+\threadamplitude}}
+#+BEAMER_HEADER:   }
+#+BEAMER_HEADER:   \state{final}
+#+BEAMER_HEADER:   {
+#+BEAMER_HEADER:     \def\screwradius{%
+#+BEAMER_HEADER:       \pgfkeysvalueof{/pgf/decoration/screw radius}%
+#+BEAMER_HEADER:     }
+#+BEAMER_HEADER:     %\pgfpathlineto{\pgfpointdecoratedpathlast}
+#+BEAMER_HEADER:     \pgfpathmoveto{\pgfpoint{0pt}{\screwradius}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{\screwradius/2}{0pt}}
+#+BEAMER_HEADER:     \pgfpathlineto{\pgfpoint{0pt}{-\screwradius}}
+#+BEAMER_HEADER:   }
+#+BEAMER_HEADER: }
+
+* Overview of Bolted Joints
+
+** Bolted Joints
+  Bolted joints are held by threaded fasteners
+  \begin{itemize}
+  \item Bolts
+  \item Screws
+  \item Nuts
+  \end{itemize}
+
+  What's the difference between a bolt and a screw?
+
+** How Bolted Joints Work
+  \begin{itemize}
+  \item Clamped members are held together by compressive load from a bolt or screw
+  \item Bolt itself is under tensile load
+  \end{itemize}
+
+** Applications of Bolted Joints
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    % clamped members
+    \node at (0,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm](A){};
+    \node at (A.north west) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    \node at (A.north east) [anchor=south east,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    % bolt
+    \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}] (0,3) -- (0,0);
+    % description
+    \node at (0,-1) {(a) Screw};
+     % bolt
+    \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}] (4,3) -- (4,-0.25);
+    % clamped members
+    \node at (2.6,0.5) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm](A){};
+    \node at (A.south east) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm, xshift=0.75cm](B){};
+    \node at (A.north) [anchor=south,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    \node at (B.north) [anchor=south,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    % nut
+    \node at (4,0) [anchor=south, draw, rectangle, fill=Grey!50, minimum height=0.5cm, minimum width=0.5cm](C){};
+    \node at (C.east) [anchor=west, draw, rectangle, fill=Grey!70, minimum height=0.5cm, minimum width=0.3cm]{};
+    \node at (C.west) [anchor=east, draw, rectangle, fill=Grey!30, minimum height=0.5cm, minimum width=0.3cm]{};
+    % description
+    \node at (4,-1) {(b) Bolt and nut};
+  \end{tikzpicture}
+\end{figure}
+
+** Application of Bolted Joints 2
+  \begin{figure}[h]
+    \begin{tikzpicture}
+      % clamped members
+      \node at (8,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm](D){};
+      \node at (D.north west) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      \node at (D.north east) [anchor=south east,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      % bolt
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=0cm, head length=0cm}] (8,3.25) -- (8,0);
+      % nut
+      \node at (8,2.5) [anchor=south, draw, rectangle, fill=Grey!50, minimum height=0.5cm, minimum width=0.5cm](E){};
+      \node at (E.east) [anchor=west, draw, rectangle, fill=Grey!70, minimum height=0.5cm, minimum width=0.3cm]{};
+      \node at (E.west) [anchor=east, draw, rectangle, fill=Grey!30, minimum height=0.5cm, minimum width=0.3cm]{};
+      % description
+      \node at (8,-1) {(c) Stud and nut};
+     % bolt
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=0cm, head length=0cm}] (12,3.25) -- (12,-0.25);
+      % clamped members
+      \node at (10.6,0.5) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm](F){};
+      \node at (F.south east) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm, xshift=0.75cm](G){};
+      \node at (F.north) [anchor=south,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      \node at (G.north) [anchor=south,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      % bottom nut
+      \node at (12,0) [anchor=south, draw, rectangle, fill=Grey!50, minimum height=0.5cm, minimum width=0.5cm](H){};
+      \node at (H.east) [anchor=west, draw, rectangle, fill=Grey!70, minimum height=0.5cm, minimum width=0.3cm]{};
+      \node at (H.west) [anchor=east, draw, rectangle, fill=Grey!30, minimum height=0.5cm, minimum width=0.3cm]{};
+    % top nut
+      \node at (12,2.5) [anchor=south, draw, rectangle, fill=Grey!50, minimum height=0.5cm, minimum width=0.5cm](I){};
+      \node at (I.east) [anchor=west, draw, rectangle, fill=Grey!70, minimum height=0.5cm, minimum width=0.3cm]{};
+      \node at (I.west) [anchor=east, draw, rectangle, fill=Grey!30, minimum height=0.5cm, minimum width=0.3cm]{};
+    % description
+      \node at (12,-1) {(d) Threaded rod};
+    \end{tikzpicture}
+  \end{figure}
+
+* Bolt Geometry and Properties
+
+** Thread Geometry
+  \centering
+  \includegraphics[width=\textwidth]{pictures/screw-thread-forms}
+
+** Thread Forms
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=1]{pictures/bolt-terminology}
+  \end{figure}
+
+
+# ** Head Types}
+#   \begin{figure}[h]
+#     \centering
+#     \includegraphics[width=0.9\textwidth]{pictures/head-types}
+#   \end{figure}
+#
+#
+# ** Head Types}
+#   \begin{figure}[h]
+#     \centering
+#     \includegraphics[width=0.9\textwidth]{pictures/drive-types}
+#   \end{figure}
+#
+
+** Standard ISO Bolt Sizes
+\scriptsize
+\begin{tabular}{ p{1.2cm} p{1cm} p{1cm} p{1.3cm} p{1cm} p{1cm} p{1.3cm}}
+  \toprule
+  \multirow{2}{1.5cm}{Nominal Diameter $d$} & \multicolumn{3}{c}{Coarse Threads} & \multicolumn{3}{c}{Fine Threads} \\ \cmidrule{2-7}
+                                            & Pitch & Minor $\diameter$ & Stress Area & Pitch & Minor $\diameter$ & Stress Area \\
+  \midrule
+  3   & 0.5  & 2.39 & 5.03 & -    & -    & - \\
+  3.5 & 0.6  & 2.76 & 6.78 & -    & -    & - \\
+  4   & 0.7  & 3.14 & 8.78 & -    & -    & - \\
+  5   & 0.8  & 4.02 & 14.2 & -    & -    & - \\
+  6   & 1    & 4.77 & 20.1 & -    & -    & - \\
+  7   & 1    & 5.77 & 28.9 & -    & -    & - \\
+  8   & 1.25 & 6.47 & 36.6 & 1    & 6.77 & 39.2 \\
+  10  & 1.5  & 8.16 & 58.0 & 1.25 & 8.47 & 61.2 \\
+  12  & 1.75 & 9.85 & 84.3 & 1.25 & 10.5 & 92.1 \\
+  14  & 2    & 11.6 & 115  & 1.5  & 12.2 & 125 \\
+  16  & 2    & 13.6 & 157  & 1.5  & 14.2 & 167 \\
+  18  & 2.5  & 14.9 & 192  & 1.5  & 16.2 & 216 \\
+  20  & 2.5  & 16.9 & 245  & 1.5  & 18.2 & 272 \\
+  22  & 2.5  & 18.9 & 303  & 1.5  & 20.2 & 333 \\
+  24  & 3    & 20.3 & 353  & 2    & 21.6 & 384 \\
+  27  & 3    & 23.3 & 459  & 2    & 24.6 & 496 \\
+  30  & 3.5  & 25.7 & 561  & 2    & 27.6 & 621 \\
+  33  & 3.5  & 28.7 & 694  & 2    & 30.6 & 761 \\
+  36  & 4    & 31.1 & 817  & 3    & 32.3 & 865 \\
+  39  & 4    & 34.1 & 976  & 3    & 35.3 & 1030 \\
+  42  & 4.5  & 36.9 & 1121 & -    & -    & - \\
+  48  & 5    & 42.7 & 1473 & -    & -    & - \\
+  \bottomrule
+\end{tabular}
+
+** How are Screw Threads Made?: Thread Rolling
+   \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.9\textwidth]{pictures/thread-rolling}
+   \end{figure}
+
+** How are Screw Threads Made?: Thread Cutting
+   \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.7\textwidth]{pictures/thread-cutting}
+   \end{figure}
+
+** Advantage of Rolled vs Cut Threads
+   \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.9\textwidth]{pictures/cut-rolled-thread}
+   \end{figure}
+
+** Strength of Bolts
+  \begin{itemize}
+  \item Because of threads and how they are formed, bolts are not loaded to their yield or ultimate tensile strength.
+  \item Instead, bolt strength is measured by a \emph{proof strength}, $S_p$.
+  \item For approximation, $S_p = 0.9 S_y$
+  \end{itemize}
+
+** Bolt Material Strength
+\small
+  \begin{tabular}{ p{0.8cm} p{1.2cm} p{1.2cm} p{1.2cm} p{1.5cm} p{1.5cm} p{1.3cm} }
+    \toprule
+    SAE Class & Diameter $d$ (mm) & Proof Strength $S_p$ (MPa) & Yield Strength $S_y$ (MPa) & Tensile Strength $S_{ut}$ (MPa) & Elongation (\%) & Reduction of Area (\%) \\
+    \midrule
+    4.6 & 5 – 36 & 225 & 240 & 400 & 22 & 35 \\
+    4.8 & 1.6 – 16 & 310 & - & 420 & - & - \\
+    5.8 & 5 – 24 & 380 & - & 520 & - & - \\
+    8.8 & 17 – 36 & 600 & 660 & 830 & 12 & 12 \\
+    9.8 & 1.6 – 16 & 650 & - & 900 & - & - \\
+    10.9 & 6 – 36 & 830 & 940 & 1040 & 9 & 9 \\
+    12.9 & 1.6 – 36 & 970 & 1100 & 1220 & 8 & 8 \\
+    \bottomrule
+  \end{tabular}
+
+** Head Markings Example
+   \begin{figure}[h]
+     \centering
+     \includegraphics[width=0.9\textwidth]{pictures/metric-head-markings}
+   \end{figure}
+
+* Bolt Stress Analysis
+
+# ** Bolt Load on Threads}
+#  \begin{columns}
+#    \column{0.6\textwidth}
+#    \begin{figure}[h]
+#      \centering
+#      \includegraphics[height=0.8\textheight]{pictures/force-flow-bolt}
+#    \end{figure}
+#    \column{0.4\textwidth}
+#    $$ \sigma  = \frac{4P}{\pi (d^2 - d_r^2)} \frac{p}{t} $$
+#  \end{columns}
+#
+
+** Bolted Joint Stress Analysis
+  \begin{itemize}
+    \item Two modes of failure
+    \item Thread failure $\rightarrow$ shear stress in thread
+    \item Tensile faiure $\rightarrow$ tensile stress in bolt
+  \end{itemize}
+
+** Shear Stress in Threads
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Thread surface area is
+              $$ A_{shear} = \pi d (0.75 t) $$
+        \item Allowable shear stress on bolt (MDET)
+              \begin{equation*}
+                \tau_{allow} = \frac{S_{y}}{\sqrt{3}} = 0.577S_{y}
+              \end{equation*}
+        \item Force to cause thread failure
+              \begin{equation*}
+                F_{thread} = 0.577S_{y}\pi d (0.75) t
+              \end{equation*}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+          \begin{figure}[h]
+            \centering
+            \includegraphics[scale=0.6]{pictures/bolt-terminology}
+          \end{figure}
+    \end{column}
+  \end{columns}
+
+** Bolt Tensile Stress
+  \begin{itemize}
+    \item Bolt tensile area
+          \begin{equation*}
+            A_{t} \approx \frac{\pi}{4}\left(0.9d\right)^{2}
+          \end{equation*}
+    \item Tensile load to yield the bolt threads
+          \begin{equation*}
+            F_{bolt} = A_t S_y \approx \frac{\pi}{4}(0.9d)^2 S_y
+          \end{equation*}
+  \end{itemize}
+
+** Preventing Thread Failure
+  \begin{itemize}
+    \item To prevent thread failure, make sure tensile failure happens first (or at the same time)
+    \item Setting $F_{bolt} = F_{nut}$
+    $$ t = 0.47d $$
+    \item The thickness nut or depth of threaded hole should be at least half major diameter.
+    \item Now we can worry only about tensile failure
+  \end{itemize}
+
+** Torque - Tensile Load Relationship
+  \begin{itemize}
+  \item Setting $\mu = 0.15$
+
+    $$ T = 0.2{F_i}d $$
+
+  \item Metal on metal friction is 0.15?
+  \end{itemize}
+
+** Proper Bolted Joints
+  \begin{itemize}
+  \item Correct bolt length and proper nut/threaded hole thickness
+    $$ t \geqslant 0.47d $$
+  \item Proper tightening with calculated torque $\rightarrow$ torque wrench is your friend
+  \item Locking mechanism: locknuts, slotted nuts, two nuts, toothed lock washers.
+  \end{itemize}
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[height=0.3\textheight]{pictures/locknut}
+    \includegraphics[height=0.3\textheight]{pictures/lock-washer}
+    \includegraphics[height=0.3\textheight]{pictures/slotted-nut}
+  \end{figure}
+
+** Bolt-Joint Interaction
+  \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.8, >=latex]
+      \draw [->] (0,0) node(A){} node[below right]{bolt extension $\rightarrow$} --++ (90:6) node[above]{$F_b$} node[midway, xshift=-8mm, rotate=90]{Tensile Load};
+      \draw (0,0) --++ (0:10);
+      \draw [->, xshift=10cm] (0,0) node(B){} node[below left]{$\leftarrow$ joint compression} --++ (90:6) node[above]{$F_j$} node[midway, xshift=5mm, rotate=90]{Compressive Load};
+      \draw [SkyBlue!50!Blue, very thick](A.center) --++ (30:8) node(C){} -- (B.center);
+      \draw [dashed] (C) -- ++ (180:7) node[left]{$F_i$};
+    \end{tikzpicture}
+  \end{figure}
+
+** Types of Bolted Joints
+  \begin{itemize}
+  \item Tension Joints
+  \item Friction Joints
+  \end{itemize}
+  \centering
+  \includegraphics[height=0.5\textheight]{pictures/joint-types}
+
+** Load Distribution in Tension Joints
+   \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.8, >=latex]
+      \draw [->] (0,0) node(A){} node[below right]{bolt extension $\rightarrow$} --++ (90:6) node[above]{$F_b$};
+      \draw (0,0) --++ (0:10);
+      \draw [->, xshift=10cm] (0,0) node(B){} node[below left]{$\leftarrow$ joint compression} --++ (90:6) node[above]{$F_j$};
+      \draw [SkyBlue!50!Blue, very thick](A.center) --++ (30:8) node(C){} -- (B.center);
+      \draw [SkyBlue!50!Blue, dashed] (C.center) --++ (30:1.5) node(D){} --++ (-90:2.3) node(E){};
+       \draw [|<->|] (D.east) -- (E.east) node[midway, right]{$P>0$};
+      \draw [dashed] (C) -- ++ (180:7) node[left]{$F_i$};
+      \draw [->] (C) --++ (90:1) node[above]{$P=0$} ;
+    \end{tikzpicture}
+  \end{figure} 
+
+** Load Distribution in Tension Joints with External Tensile Load
+  From previous diagram
+
+  \begin{align*} 
+    {F_b} &= {P_b} + {F_i} = CP + {F_i} \\[1em]
+    {F_j} &= (1 - C)P - {F_i}
+  \end{align*}
+  
+  where $C = k_b/(k_b + k_j)$.
+
+  Load carried by bolt and clamped members depend on stiffness ratio
+
+** Bolted Joint Stiffness
+  \begin{columns}
+    \column{0.6\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1]
+      \draw[decorate,line width=0pt,Black!50!Grey,decoration={screw, screw radius=0.6cm, thread amplitude=2pt, thread separation=3pt, head width=2.5cm, head length=0.8cm}] (0,5) -- (0,-1);
+      % clamped members
+      \draw[fill=LightBlue] (-3,0.5) rectangle (-0.8,2.3);
+      \draw[fill=LightBlue, xshift=3.8cm] (-3,0.5) rectangle (-0.8,2.3);
+      \draw[fill=LightBlue] (-3,2.3) rectangle (-0.8,4.2);
+      \draw[fill=LightBlue, xshift=3.8cm] (-3,2.3) rectangle (-0.8,4.2);
+    % springs
+      \draw[decoration={aspect=0.2, segment length=9mm, amplitude=1.5cm,coil},decorate, line width=8pt, LightBlue!80!Blue] (0,4.2) -- (0,0) node(A){} node[midway, black, xshift=-1.8cm]{$k_j$};
+      \draw[decoration={aspect=0.2, segment length=6mm, amplitude=0.6cm,coil},decorate, ultra thick] (0,4.2) --  (0,0) node[midway,black, xshift=1cm]{$k_b$};
+      % nut
+      \node at (0,-0.5) [anchor=south, draw, rectangle, fill=Grey!50, minimum height=1cm, minimum width=1cm](B){};
+      \node at (B.east) [anchor=west, draw, rectangle, fill=Grey!70, minimum height=1cm, minimum width=0.7cm]{};
+      \node at (B.west) [anchor=east, draw, rectangle, fill=Grey!30, minimum height=1cm, minimum width=0.7cm]{};
+    \end{tikzpicture}
+    \column{0.4\textwidth}
+    \normalcolor
+    \Large{ $k_{total} = k_b + k_j$ }
+  \end{columns}
+
+
+# ** Bolt Stiffness}
+#   For bolt with threaded (t) and unthreaded (u) parts
+#   \begin{align*}
+#     \frac{1}{k_b} &= \frac{1}{k_u} + \frac{1}{k_t} \\
+#     \frac{1}{k_b} &= \frac{L_u}{EA_u} + \frac{L_t}{EA_t} \\
+#     k_b &= E\left( \frac{A_uA_t}{L_uA_t + L_tA_u} \right)
+#   \end{align*}
+#   If bolt is threaded throughout
+#   \begin{align*}
+#     k_b = \frac{EA_t}{L} \approx \frac{\pi (0.9d)^2 E}{4L} \approx \frac{0.64d^2E}{L}
+#   \end{align*}
+#
+#
+#
+# ** Clamped Parts Stiffness}
+#   \begin{columns}
+#     \column{0.6\textwidth}
+#     \centering
+#     \begin{tikzpicture}[>=latex]
+#       \draw[decorate,thick,decoration={screw, screw radius=0.65cm, thread amplitude=2pt, thread separation=2pt, head width=2.5cm, head length=0.8cm}] (0,5) -- (0,-1);
+#       % clamped members
+#       \draw[fill=LightBlue] (-3,0.5) rectangle (-0.8,2.3);
+#       \draw[fill=LightBlue, xshift=3.8cm] (-3,0.5) rectangle (-0.8,2.3);
+#       \draw[fill=LightGrey] (-3,2.3) rectangle (-0.8,4.2);
+#       \draw[fill=LightGrey, xshift=3.8cm] (-3,2.3) rectangle (-0.8,4.2);
+#       % nut
+#       \draw[fill=Grey!30] (-1.5,0) rectangle (-0.75,0.5);
+#       \draw[fill=Grey!30] (0.75,0) rectangle (1.5,0.5);
+#       \draw[fill=Grey!50] (-0.75,0) rectangle (0.75,0.5);
+#       % dimensioning
+#       \draw[|<->|] (-0.7,-1.4) --++ (0:1.4) node[midway, yshift=-0.3cm]{$d_1 = d$};
+#       \draw[|<->|] (2, 0) --++ (90:0.5) node[midway,xshift=0.3cm]{$t$};
+#       \draw[|<->|] (-1.25, 5.3) --++ (0:2.5) node[midway,yshift=0.3cm]{$d_2 = 1.5 d$};
+#     % 30-degree cone
+#       \draw[dashed]  (-1.5,0.5) --++ (120:1.9);
+#       \draw[dashed]  (1.5,0.5) --++ (60:1.9);
+#       \draw[dashed]  (-1.25,4.2) --++ (-120:2.5);
+#       \draw[dashed]  (1.25,4.2) --++ (-60:2.5);
+#     \end{tikzpicture}
+#     \column{0.4\textwidth}
+#     For two clamped parts
+#     $$ \frac{1}{k_j} = \frac{L_1}{E_1A_1} + \frac{L_2}{E_2A_2} $$
+#     For two \emph{identical} clamped parts
+#     $$ k_j = \frac{EA_c}{L_1+L_2} $$
+#     What area $A_c$ are we talking about?
+#   \end{columns}
+#
+#
+# \begin{frame}
+#   Area of clamped parts $A_c$ is an average area of 30$^{\circ}$ cone.
+#   $$ A_c = \frac{\pi}{4} \left[ \left( \frac{d_3 + d_2}{2} \right)^2 - d_1^2 \right]  $$
+#   These values can be assumed for most cases
+#   \begin{align*}
+#   d_1 &= d \\
+#   d_2 &= 1.5d \text{ for standard hexagonal-headed bolts} \\
+#   d_3 &= d_2 + L \tan 30^{\circ}
+#   \end{align*}
+#   which gives
+#
+#   $$ A_c \approx d^2 + 0.68dL + 0.065L^2 $$
+#
+#
+# ** Stiffness Ratio Calculation}
+#    Determine the stiffness ratio $C$ for a bolted joint made of two 1-cm thick aluminum plates held together by an M8 bolt and nut. $E_{Al}$ = 70 GPa and $E_{steel}$ = 210 GPa.
+#
+#
+# ** Solution}
+# First, start by determining the bolt stiffness. An M8 bolt obviously has the diameter of 8 mm. We will assume that the bolt is threaded all the way through. Utilizing bolt stiffness equation, we have
+#
+#   \begin{align*}
+#     k_b &= \frac{0.64d^2E}{L} \\
+#         &= \frac{0.64 (0.008^2)(210 \times 10^9)}{0.01+0.01} \\
+#         &= 4.3 \times 10^8 \text{ N/m}
+#   \end{align*}
+#
+#
+# ** Solutions
+# To evaluate the clamped parts stiffness, we must determine their effective cross-sectional area first.
+#
+#   \begin{align*}
+#     A_c &\approx d^2 + 0.68dL + 0.065L^2 \\
+#         &= 0.008^2 + 0.68(0.008)(0.02) + 0.065(0.02)^2 \\
+#         &= 1.99 \times 10^{-4} \text{ m}^2
+#   \end{align*}
+#
+#
+# ** Solutions
+# We can then determine the clamped parts stiffness.
+#
+#   \begin{align*}
+#     k_j &= \frac{E_{Al}A_c}{L} \\
+#         &= \frac{70 \times 10^9 \times 1.99 \times 10^{-4}}{0.02} \\
+#         &= 6.97 \times 10^8 \text{ N/m}
+#   \end{align*}
+#
+#
+# ** Solutions
+# Finally, the stiffness ratio $C$ is
+#
+#   \begin{align*}
+#     C & = \frac{k_b}{k_b + k_j} = \frac{4.3}{4.3 + 6.97} \\
+#       &= 0.38
+#   \end{align*}
+#
+#   Note that $C$ in this example is larger than normal because the clamped material (aluminum) is softer than the bolt (steel). In this case, it may be advisable to use a washer to increase $A_c$ and to increase the clamped parts stiffness.
+#
+
+** Bolt Size Selection for Tension Joints
+  The only job we have is to keep the clamped part together
+  \begin{gather*}
+    F_j = 0 = (1 - C)P - {F_i} \\ 
+    P = \frac{F_i}{1 - C}
+  \end{gather*}
+
+For non-permanent joints, $F_i = 0.75 S_p A_t$ and $C \approx 0.25$
+
+For the bolted joint to have a safety factor of $N_s$
+
+\begin{equation*}
+  {A_t} = \frac{N_sP}{N S_p}
+\end{equation*}
+
+** Friction Joints
+  \begin{columns}
+    \column{0.7\textwidth}
+    \centering
+    \begin{tikzpicture}[>=latex, scale=0.6]
+      \draw[decorate,thick,decoration={screw, screw radius=0.35cm, thread amplitude=1.5pt, thread separation=2pt, head width=1.5cm, head length=0.6cm}] (0,5.2) -- (0,-1);
+      % clamped members
+      \draw[fill=LightBlue] (-3,0.5) rectangle (-0.8,2.3);
+      \draw[fill=LightBlue, xshift=3.8cm] (-3,0.5) rectangle (-0.8,2.3);
+      \draw[fill=LightGrey] (-3,2.3) rectangle (-0.8,4.2);
+      \draw[fill=LightGrey, xshift=3.8cm] (-3,2.3) rectangle (-0.8,4.2);
+      % nut
+      \draw[fill=Grey!30] (-1.5,0) rectangle (-0.75,0.5);
+      \draw[fill=Grey!30] (0.75,0) rectangle (1.5,0.5);
+      \draw[fill=Grey!50] (-0.75,0) rectangle (0.75,0.5);
+      % forces
+      \draw[->, ultra thick] (-2,2.3) --++ (-90:2) node (A){} node[right]{$F_i$};
+      \draw[->, ultra thick] (A.west) --++ (90:0.8) node (B){} node[midway,left]{$P(1-C)$};
+      \draw[<-, ultra thick, Blue]  (B.center) --++ (90:1.2) node[midway,left]{$F_j$};
+      \draw[->, line width=3pt] (-3,3.3) --++ (180:2) node[left]{$P_{shear}$};
+      \draw[->, line width=3pt] (3,1.4) --++ (0:2) node[right]{$P_{shear}$};
+    \end{tikzpicture}
+    \column{0.4\textwidth}
+    \begin{itemize}
+    \item Prevent members from sliding by \emph{friction} not interference
+    \item Compressive load exerted by bolt generate friction
+    \end{itemize}
+  \end{columns}
+
+** Bolt Size Selection for Friction Joints
+  
+\[{P_{shear}} = -\mu {F_j}\] 
+
+Again assuming $ F_i = 0.75 S_p A_t$ and $C = 0.25$
+
+\begin{align*}
+  P_{shear} &= -\mu {F_j} = -\mu \left( P(1 - C) - F_i \right) \\
+            &= \mu (0.75{S_p}{A_t} - 0.75P) \\
+  A_t &= \frac{1}{S_p}\left( \frac{P_{shear}}{0.75 \mu} + P \right)
+\end{align*}
+
+For safety factor $N_s$ with $N$ bolts
+
+\begin{gather*}
+  A_t = \frac{N_s}{N S_p}\left( \frac{P_{shear}}{0.75 \mu} + P \right)
+\end{gather*}
+
+
+** Flange Joints
+  \begin{itemize}
+  \item Circular bolt arrays for sealing purpose.
+  \item Mainly used for pipe connections and pressure vessels
+  \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[height=0.45\textheight]{pictures/pipe-connection}
+    \includegraphics[height=0.45\textheight]{pictures/pressure-vessel}
+  \end{figure}
+
+** Gasketed Flange Joints
+  \begin{figure}[h]
+    \includegraphics[height=0.4\textheight]{pictures/gasket-joint}
+  \end{figure}
+  \begin{itemize}
+  \item soft materials: rubber, plastic, or soft metals between clamped member
+  \item How does that help?
+  \item How does it effect the joint strength?
+  \end{itemize}
+
+** Equation for Flange Joints
+  \centering
+  \begin{tikzpicture}[>=latex]
+    \node {\includegraphics[width=0.8\textwidth]{pictures/flange-joint}};
+    \draw [|<->|, thick] (0.6,1.35) --++ (-90:2.9) node[midway, left]{$D_b$};
+  \end{tikzpicture}
+  $$ 3 \leqslant \frac{\pi D_b}{Nd} \leqslant 6 $$
+
+** Flange Joint on Pressure Vessel Example
+  A cylindrical pressure vessel is pressurized to 10 MPa. The cross section of the vessel is shown below. The flange joint to keep the cover on the vessel is made up of 12 grade 12.9 M8 coarse thread bolts. Is this joint safe? If not, determine the proper bolt size.
+  \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+      % clamped members left
+      \node at (0,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm](A){};
+      \node at (A.north west) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    % clamped members right
+      \node at (0,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm, xshift=8cm](B){};
+      \node at (B.north east) [anchor=south east,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      % cover
+      \draw [fill=lightblue] (A.north east) ++ (-1,1) --++ (-90:1) -- (B.north west) --++ (1,0) --++ (90:1) --cycle;
+      % bolt left
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}] (0,3) -- (0,0);
+      % bolt right
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}, xshift=8cm] (0,3) -- (0,0);
+      % internal pressure
+      \node at (A.center) [xshift=4cm, yshift=-0.5cm]{$P_{int} = 10$ MPa};
+      % dimensions
+      \draw [|<->|] (0,3.5) --++ (0:8) node[midway, above]{$D_b = 1.5$ m};
+      \draw [|<->|] (A.north east) ++ (-90:0.7) --++ (0:5.2) node[midway, above]{1 m};
+    \end{tikzpicture}
+  \end{figure}
+
+** Solution
+# In this problem, there is no specification about changes in the pressure, so it is assumed that the pressure is constant and the load is static. Most bolts are ductile and so the proper safety factor is 1.5 – 2. We will use 2 in this problem, just to be safe. Using sizing equation for bolts to determine proper bolt tensile area, we have
+  \begin{itemize}
+    \item Assume constant pressure, $N_{s}$ = 2
+          \[{A_t} = \frac{{P{N_s}}}{{{S_p}}}\]
+    \item The vertical load comes from the pressure force, which is
+          \[{P_{total}} = p\pi {r^2} = 10 \times {10^6} \times \pi  \times {0.5^2} = 7.85\;{\text{MN}}\]
+  \end{itemize}
+
+** Solutions
+  \begin{itemize}
+    \item We will assume that the load is distributed evenly on all 12 bolts, so that
+          \[P = \frac{{{P_{total}}}}{N} = \frac{7.85 \text{ MN}}{12} = 6.54 \times {10^5}\;{\text{N}}\]
+    \item Assume that we use the bolt material grade 12.9 whose proof strength is 970 MPa, the required tensile area is
+          \[{A_t} = \frac{(2)(6.54 \times 10^5)}{970 \times 10^6} = 1.35 \times 10^{ - 3} \text{ m}^2 = 1350 \text{ mm}^{2}\]
+  \end{itemize}
+
+** Solutions
+  \begin{itemize}
+    \item The calculated required tensile area, even with the strongest material (grade 12.9), is larger than M8 coarse thread (36.6 mm$^2$) and therefore the given design is unsafe!
+    \item Redesigning the flange joint, it must satisfy the sizing equation above and the bolt distance equation, namely
+          \[3 \leqslant \frac{\pi D_b}{Nd} \leqslant 6\]
+    \item Since $D_{b}$ = 150 cm, set the inequality to 4.5 to solve.
+        \begin{gather*}
+          \frac{{\pi {D_b}}}{{Nd}} = 4.5 \hfill \\
+          Nd = 1.05 \hfill \\
+        \end{gather*}
+  \end{itemize}
+
+** Solutions
+  \begin{itemize}
+    \item Reapply the tension joint equation to determine the total required tensile area, we have
+          \begin{align*}
+            N{A_t} &= \frac{{{N_s}P}}{{{S_p}}} = \frac{2(7.85 \times 10^6)}{970 \times 10^6} \\
+                   &= 1.62 \times 10^{ - 2} \text{ m}^2
+          \end{align*}
+  \end{itemize}
+
+** Solutions
+# Note that at the moment, the system of equations we are attempting to solve have two equations and three unknowns ($N$, $A_t$, and $d$). However, the tensile area and the diameter obviously are not independent. By assuming that the tensile area is $\approx 0.8(\pi/4)d^2$, a simplified relationship between tensile area and bolt diameter can be written to solve this system of equations.
+\begin{itemize}
+  \item 2 equations, 3 unknowns
+  \item Are the unknowns all independent?
+  \end{itemize}
+  \[\begin{gathered}
+    A_t \approx \frac{\pi}{4}\left(0.9d\right)^{2} \\
+  NA_t \approx N(0.81)\frac{\pi}{4}{d^2} = 1.62 \times {10^{ - 2}} \\
+  Nd^2 = 2.58 \times 10^{ - 2} \\
+\end{gathered} \]
+
+** Solutions
+  \begin{itemize}
+    \item Solving the system of equations, we have
+  \end{itemize}
+\[\frac{Nd^2}{Nd} = \frac{2.58 \times 10^{-2}}{1.05} = 0.0245 \text{ m} = 24.5 \text{ mm} \]
+
+** Solutions
+  \begin{itemize}
+    \item Since there is no standard bolts with that size, we pick the next larger bolt, M27 $\times$ 2 (fine thread)
+    \item Finally, $A_t$ = 496 mm$^2$ (from M27) is used to solve for the number of required bolts
+          \[N = \frac{{1.62 \times {{10}^{ - 2}}}}{{496 \times {{10}^{ - 6}}}} = 25.4\]
+    \item Therefore, we need 26 M27 $\times$ 2 for this flange joint.
+  \end{itemize}
+
+* Bolted Joint for Fatigue Loading
+
+** Bolt Sizing for Fatigue Loading
+  \begin{itemize}
+  \item If properly tightened, endurance limit of bolt is constant regardless of average stress
+     $$ N_s = \frac{S_e}{\sigma_a} $$
+     $$ \sigma_a = \frac{C K_f (P_{\max} - P_{\min})}{2NA_t} $$
+  \end{itemize}
+
+** Bolt Strength under Fatigue
+  \centering
+  \begin{tabular}{lc}
+    \toprule
+    Material Grade & Endurance Limit ($S_e$) \\
+    \midrule
+    8.8 & 129 MPa \\
+    9.8 & 140 MPa \\
+    10.9 & 162 MPa \\
+    12.9 & 190 MPa \\
+    \bottomrule
+  \end{tabular}
+
+** Stress Concentration Factor of Bolts
+
+\begin{tabular}{>{\raggedright}p{2.5cm}>{\raggedright}p{2.5cm}>{\raggedright}p{2cm}>{\raggedright\arraybackslash}p{2cm}}
+  \toprule
+  Hardness & SAE Class (ISO Threads) & $K_f$ Rolled threads & $K_f$ Cut threads \\
+  \midrule
+  Below 200 Bhn (annealed) & 5.8 and below & 2.2 & 2.8 \\
+  Above 200 Bhn (hardened) & 8.8 and above & 3.0 & 3.8 \\
+  \bottomrule
+\end{tabular}
+
+# Add Section on Examples with Shaft
+
+** Bolted Joint Design under Fatigue Example
+
+ A cylindrical pressure vessel is pressurized and depressurized repeatedly between 0 and 10 MPa during its operation. The cross section of the vessel is shown below. Design a proper flange joint with a safety factor of 2.
+
+  \begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+      % clamped members left
+      \node at (0,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm](A){};
+      \node at (A.north west) [anchor=south west,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+    % clamped members right
+      \node at (0,-0.5) [anchor=south,draw, rectangle, fill=lightblue, minimum width=2.8cm, minimum height=2cm, xshift=8cm](B){};
+      \node at (B.north east) [anchor=south east,draw, rectangle, fill=lightblue, minimum width=1cm, minimum height=1cm]{};
+      % cover
+      \draw [fill=lightblue] (A.north east) ++ (-1,1) --++ (-90:1) -- (B.north west) --++ (1,0) --++ (90:1) --cycle;
+      % bolt left
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}] (0,3) -- (0,0);
+      % bolt right
+      \draw[decorate,thick,decoration={screw, screw radius=0.3cm, thread amplitude=1pt, thread separation=2pt, head width=1.0cm, head length=0.5cm}, xshift=8cm] (0,3) -- (0,0);
+      % internal pressure
+      \node at (A.center) [xshift=4cm, yshift=-0.5cm]{$P_{int} = [0,10]$ MPa};
+      % dimensions
+      \draw [|<->|] (0,3.5) --++ (0:8) node[midway, above]{$D_b = 1.5$ m};
+      \draw [|<->|] (A.north east) ++ (-90:0.7) --++ (0:5.2) node[midway, above]{1 m};
+    \end{tikzpicture}
+  \end{figure}
+
+
+** Solution
+   # This problem is clearly fatigue related since the internal pressure varies. We need to find the range of external load and corresponding stress to determine the required fatigue strength of the flange joint. According to the previous example, the load exerted by the internal pressure of 10 MPa is 7.85 MN. Obviously, the load exerted by the internal pressure of 0 bar is 0 N. The stress amplitude can then be calculated.
+
+   \begin{itemize}
+   \item Definitely fatigue related
+   \item Max load = 7.85 MN, from previous example
+   \item Min load = ?
+   \end{itemize}
+
+   \begin{align*}
+     \sigma_{\max} &= \frac{C K_f P_{\max}}{N A_t} = \frac{0.25(3)(7.85 \times 10^6)}{NA_t} = \frac{5.89 \times 10^6}{NA_t} \\
+     \sigma _{\min} &= 0 \\
+     \sigma _a &= \frac{2.94 \times 10^6}{N A_t}
+   \end{align*}
+
+** Solutions
+
+# In this problem, let us choose bolts made of grade 12.9 (rolled threads) as we did in the previous example, whose endurance limit is 190 MPa. This is to provide a comparison between bolt sizing under static and fatigue loadings. The design requires the safety factor of 2, so the required bolt area is
+
+   \begin{itemize}
+   \item Grade 12.9 $\rightarrow$ $S_e$ = 190 MPa
+   \end{itemize}
+
+ \[\begin{gathered}
+   {N_s} = 2 = \frac{{{S_e}}}{{{\sigma _a}}} = \frac{{190 \times {{10}^6}}}{{\dfrac{{2.94 \times {{10}^6}}}{{N{A_t}}}}} \hfill \\
+   N{A_t} = 3.10 \times 10^{ - 2} \text{ m}^2 \hfill \\
+ \end{gathered} \]
+
+ # The joint must also be checked for yielding under tensile load. In this case, we can use the sizing equation for tension joint. This has already been calculated in the previous example so that
+
+ \begin{itemize}
+ \item Check for yield under tensile load.
+ \end{itemize}
+
+ \[N{A_t} = \frac{{{N_s}P}}{{{S_p}}} = \frac{{2(7.85 \times {{10}^6})}}{{970 \times {{10}^6}}} = 1.62 \times {10^{ - 2}} \text{ m}^2\]
+
+** Solutions
+   # In this case, the fatigue loading (which requires larger bolt tensile area) is the deciding factor. Setting the bolt spacing inequality to solve the system of equations, we have
+   \begin{itemize}
+     \item Fatigue requires larger area $\rightarrow$ deciding factor
+   \end{itemize}
+
+ \[\begin{gathered}
+   \frac{{\pi {D_b}}}{{Nd}} = 4.5 \hfill \\
+   Nd = 1.05 \hfill \\
+ \end{gathered} \]
+
+\begin{itemize}
+  \item We can then solve for the required diameter.
+\end{itemize}
+
+ \[\begin{gathered}
+   N{A_t} = N(0.8)\frac{\pi}{4}{d^2} = 3.10 \times {10^{ - 2}} \hfill \\
+   N{d^2} = 4.93 \times {10^{ - 2}} \hfill \\
+   \frac{Nd^2}{Nd} = \frac{4.93 \times 10^{ - 2}}{1.05} = 0.047 \text{ m} \hfill \\
+ \end{gathered} \]
+
+** Solutions
+   \begin{itemize}
+     \item The required bolts are then M48 $\times$ 5, and the required number of bolts is
+           \[N = \frac{{3.10 \times {{10}^{ - 2}}}}{{1473 \times {{10}^{ - 6}}}} = 21\]
+     \item So we would need 21 M48 $\times$ 5 bolts.
+   \end{itemize}
+
+** Final Notes on Bolted Joint Design for Fatigue Loading
+   \begin{itemize}
+   \item Properly tighten bolt
+   \item Choose rolled threads whenever possible
+   \end{itemize}
+
+** Solutions
+   \Huge \centering Any Questions?
+
+
+# ** Example
+#
+# A bolted joint is experiencing fluctuating tensile loading ranging from 400 to 1000 N. Determine the proper bolt size so that the fatigue safety factor is 3, given that the bolt material is grade 8.8.

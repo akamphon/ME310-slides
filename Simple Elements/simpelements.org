@@ -1,0 +1,556 @@
+#+TITLE: Design of Simple Machine Elements
+#+SUBTITLE: ME 310: Mechanical Design
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:nil timestamp:nil H:2 title:t
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: xelatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usepackage{pgfplots}
+#+BEAMER_HEADER: \usepackage{multirow}
+#+BEAMER_HEADER: \usepackage{smartdiagram}
+#+BEAMER_HEADER: \pgfplotsset{compat=1.18}
+#+BEAMER_HEADER: \definecolor{lightblue}{RGB}{180,220,255}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \date{}
+#+BEAMER_HEADER: \usetikzlibrary{patterns,shapes,arrows}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+* Simple Machine Elements
+  #+ATTR_REVEAL: :frag (none none none roll-in)
+
+** Not-so-simple Machine Elements
+   
+   - Most elements have multiple loads at once
+   - What do we do?
+   - Relax. That's what we are here to find out.
+
+* Beam Design
+
+** Fully Stressed Beams
+
+  [[./pictures/fea-beam.png]]
+
+  [[./pictures/fea-fully-stressed-beam.png]]
+
+** Fully Stressed Cantilever Beam
+
+  [[./pictures/fea-fully-stressed-beam-analysis.png]]
+
+  \begin{equation*}
+    \sigma(x) = \frac{My}{I} = \frac{Fx(h/2)}{bh^3/12} = \frac{6Fx}{bh^2}
+  \end{equation*}
+
+** Shape of Fully Stressed Cantilever Beam
+
+  Let $\sigma(x) = S_y$ for all $x$
+  \begin{gather*}
+    \frac{6Fx}{bh^2} = S_y \\
+    bh^2 = \frac{6Fx}{S_y} = cx
+  \end{gather*}
+
+** Shape of Fully Stressed Cantilever Beam
+
+  - Set $b$ as a constant = constant width
+
+  \begin{tikzpicture}
+    \begin{axis} [
+      height=0.5\textwidth,
+      width=0.6\textwidth,
+      xmin=0,xmax=10,
+      ymin=0,ymax=4,
+      ]
+      \addplot [domain=0:10,samples=200,no marks, blue, thick] {sqrt(x)};
+    \end{axis}
+    \node at (2,3.5) {$h = \sqrt{\dfrac{6Fx}{bS_y}}$};
+  \end{tikzpicture}
+  \includegraphics[width=0.4\textwidth]{pictures/fully-stressed-parabola}
+
+** Shape of Fully Stressed Cantilever Beam
+
+  - Set $h$ as a constant = constant thickness
+
+  \begin{tikzpicture}
+    \begin{axis} [
+      height=0.5\textwidth,
+      width=0.6\textwidth,
+      xmin=0,xmax=10,
+      ymin=0,ymax=4,
+      ]
+      \addplot [domain=0:10,no marks, blue, thick] {x/4};
+    \end{axis}
+    \node at (2,2.5) {$b = \dfrac{6Fx}{h^2S_y}$};
+  \end{tikzpicture}
+  \includegraphics[width=0.4\textwidth]{pictures/fully-stressed-wedge}
+
+** Exercise: Fully Stressed Simply-supported Beams
+
+  - Find shapes for a simply supported beam with midpoint load
+    1. constant $h$
+    2. constant $b$
+
+** Fully Stressed Beam in 3D
+  \centering
+  \includegraphics[width=0.45\textwidth]{pictures/fea-fully-stressed-beam-3d}
+  \includegraphics[width=0.45\textwidth]{pictures/fea-fully-stressed-beam-3d-section}
+
+
+** Structural sections of beams
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \draw [fill=LightSkyBlue] (0,0) ++ (0:0.2) --++ (90:1) --++ (10:1) --++ (90:0.2) --++ (180:2.2) --++ (-90:0.2) --++ (-10:1) --++ (-90:2) --++ (-170:1) --++ (-90:0.2) --++ (0:2.2) node[midway, below]{S shape} --++ (90:0.2) --++ (170:1) --cycle;
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}
+    \draw [fill=LightSkyBlue] (0,0) ++ (0:0.2) --++ (90:1.1) --++ (0:1) --++ (90:0.3) --++ (180:2.2) --++ (-90:0.3) --++ (0:1) --++ (-90:2.1) --++ (180:1) --++ (-90:0.3) --++ (0:2.2) node[midway, below]{W shape} --++ (90:0.3) --++ (180:1) --cycle;
+    % \draw [dashed] (0.1,-2) node[below]{2}--++ (90:4) node[above]{2};
+    % \draw [dashed] (-1.5,0) node[left]{1} --++ (0:3) node[right]{1};
+  \end{tikzpicture}
+   \hspace{1cm}
+  \begin{tikzpicture}
+    \draw [fill=LightSkyBlue] (0,0) --++ (180:1) node[midway, below]{C shape} --++ (90:2.7) --++ (0:1) --++ (-90:0.3) --++ (180:0.7) --++ (-90:2.1) --++ (0:0.7) -- cycle;
+  \end{tikzpicture}
+  \hspace{1cm}
+  \begin{tikzpicture}
+    \draw [fill=LightSkyBlue] (0,0) --++ (0:2.7) node[midway, below]{L shape} --++ (90:0.3) --++ (180:2.4) --++ (90:2.4) --++ (180:0.3) -- cycle;
+  \end{tikzpicture}
+\end{figure}
+
+** Beam design constraints
+
+  - Stress
+  - Deformation
+
+  Which of the conditions is mandatory? Why?
+
+** Stress Constraint
+
+  From beam and safety factor equations
+  \begin{gather*}
+    \sigma = \dfrac{My}{I} = \dfrac{M}{S} \\
+    N_s = \dfrac{S_y}{\sigma}
+  \end{gather*}
+
+  We have
+  $$ S = \dfrac{N_s M}{S_y} $$
+
+** Deformation Constraint
+
+  \begin{align*}
+    \delta &= k \dfrac{FL^3}{EI} \\
+    I &= k \dfrac{FL^3}{E \delta}
+  \end{align*}
+
+  $k$ depends on loading and support conditions
+
+** Example: Gantry Crane
+
+  Select a proper section to build a 3-ton gantry crane of 4-m span. The maximum deflection should be less than 1 cm.
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_COL: 0.6
+:END:
+[[./pictures/gantry-crane.png]]
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_COL: 0.4
+:END:
+      \begin{gather*}
+        S_y = 300 \text{ MPa} \\
+        \delta = \frac{FL^3}{48EI}
+      \end{gather*}
+
+** Section Properties
+
+  [[./pictures/section-table.png]]
+
+* Column Design
+** Column constraints
+
+  - Theoretically we have $P = \dfrac{\pi^2 EI}{L_e^2}$
+  - Shouldn't that be enough?
+  - yielding vs buckling
+
+** Real World Columns
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_COL: 0.4
+:END:
+\includegraphics[height=0.5\textheight]{pictures/perfect-column} \\
+Theory
+
+- perfectly straight
+- consistent properties
+- centroidal load
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_COL: 0.4
+:END:
+
+\includegraphics[height=0.5\textheight]{pictures/real-world-column} \\
+Real World
+
+- not true
+- never true
+- does not happen ever
+
+** Column Dimensions and Design Equations
+
+  - Allowable stress depends on beam \emph{slenderness ratio}
+    $$ \lambda = \frac{KL}{r_g} $$
+  - Need to find a `critical slenderness ratio' $\lambda_c$ where the same load can cause buckling or yielding
+
+
+** Steel Column Critical Slenderness Ratio
+
+# - Residual stress of $\dfrac{S_y}{2}$ in columns is reported
+  - Critical slenderness ratio $\lambda_c$ where the same load causes buckling and yielding
+    \begin{gather*}
+      S_y = \frac{\pi ^2E}{\lambda_c^2} \\
+      \lambda_c = \sqrt {\frac{\pi^2E}{S_y}}
+    \end{gather*}
+  - longer beams $\rightarrow$ buckling, shorter beams $\rightarrow$ yielding
+
+
+
+# ** {Steel Column Design Equations}
+#   \begin{equation*}
+#     \begin{array}{c c c}
+#      \sigma_{allow} = \dfrac{12\pi^2E}{23 \lambda^2} & & \lambda_c \leqslant \lambda \leqslant 200 \\[20pt]
+#       \sigma_{allow} = \dfrac{ \left[ 1 - \dfrac{\lambda^2}{2\lambda_c^2} \right] S_y }{\dfrac{5}{3} + \dfrac{ 3\lambda }{8\lambda_c} - \dfrac{\lambda^3}{8\lambda_c^3}} & & \lambda \leqslant  \lambda_c
+#     \end{array}
+#   \end{equation*}
+#
+# % ** {Steel Columns}
+#   \scriptsize
+#   \begin{tikzpicture}
+#     \begin{axis}[
+#       width=0.9\textwidth,
+#       height=.6\textwidth,
+#       xmin=0,xmax=200,
+#       ymin=0,ymax=1,
+#       ytick distance=0.2,
+#       xticklabels={,,},
+#       xlabel={Slenderness Ratio $\lambda$},
+#       ylabel={$\dfrac{\sigma_{allow}}{S_y}$},
+#       ylabel style={rotate=-90},
+#       cycle list name=exotic,
+#       samples=100,
+#       no markers,
+#       grid=both,
+#       every axis plot/.append style={thick},
+#       ]
+#       \addplot [domain=0:100, DarkBlue]{(1-(x^2)/(2*100^2))/(5/3+3*x/(8*100)-x^3/(8*100^3))} node[midway, below left]{short column};
+#       \addplot [domain=100:200, DarkRed]{12/23*100^2/(2*x^2)} node[midway, above right]{long column};
+#       \addplot [domain=51:100, DarkGrey!20!Black, dashed] {12/23*100^2/(2*x^2)} node[near start, above right]{theory};
+#     \end{axis}
+#     \draw [dashed, Red] (4.6,0) --++ (90:5.6) node[at start, below]{$\lambda_c$};
+#   \end{tikzpicture}
+#
+# ** {Example}
+#  Determine a proper cross section of a structural wide-flange steel beam (S-shape) for a gantry crane. Two identical 3-m long columns support the left and right end of a 4-m long beam. The maximum allowable weight on the crane is 100000 N. The safety factor of the column is 2. Consider the top part free and the bottom part fixed. $S_y$ = 300 MPa.
+
+# \begin{enumerate}
+#  - Ideal column assumption.
+#   - AISC design equation.
+#   \end{enumerate}
+#   Compare and discuss the results.
+#
+
+** Column with Eccentric Loads (or Bending Loads)
+
+  - What if the column is taking a bending load as well?
+  - For short columns
+    \begin{equation*}
+      \sigma_{\max} = \frac{P}{A} + \frac{My}{I}
+    \end{equation*}
+
+
+** And for longer columns?
+
+  - Use interaction formula
+    \begin{gather*}
+      A_a = \frac{P}{(\sigma_a)_{allow}} \\
+      A_b = \frac{My}{(\sigma _b)_{allow}r_g^2} \\
+      A \geqslant A_a + A_b \\
+      \dfrac{\sigma _a}{(\sigma_a)_{allow}} + \dfrac{\sigma_b}{(\sigma_b)_{allow}} \leqslant 1
+    \end{gather*}
+
+
+** Example: Column with Bending Load(s)
+  Reconsider the gantry crane column example, but now the beam is fixed to the columns. The new safety factor should be 3.
+
+
+** Solution: Column with Bending Loads
+
+#+BEGIN_SRC python :session column-bending :exports none
+F = 100000
+L = 4
+M = F * L / 8
+N_s = 3
+sigma_allow = 300 * 10**6 / N_s
+A_a = M/sigma_allow
+F_col = F/2
+#+END_SRC
+
+#+RESULTS:
+
+- Maximum stress happens when the weight is in the middle.
+- The compressive load is that each column takes is $\dfrac{F}{2}$ = src_python[:session column-bending :results raw]{round(F_col)} N.
+- The bending moment caused by midpoint load is $\dfrac{FL}{8}$ = src_python[:session column-bending :results raw]{round(M)} N-m
+
+** Calculating the ratio
+
+#+BEGIN_SRC python :session column-bending :exports none
+designation = ['S610 x 149', 'S510 x 143', 'S460 x 104', 'S380 x 74', 'S310 x 74', 'S250 x 52']
+Area = [18900*10**-6, 18200*10**-6, 13200*10**-6, 9480*10**-6, 9420*10**-6, 6650*10**-6]
+S = [3260 * 10**-6, 2700 * 10**-6, 1690*10**-6, 1060*10**-6, 829*10**-6, 482*10**-6]
+#+END_SRC
+
+#+RESULTS:
+
+- We need to determine the ratio $\dfrac{\sigma _a}{(\sigma_a)_{allow}} + \dfrac{\sigma_b}{(\sigma_b)_{allow}}$
+- For steel, $(\sigma_a)_{allow} = (\sigma_b)_{allow} = \sigma_{allow}$
+- As a sample calculation,
+
+#+BEGIN_SRC python :session column-bending :exports results :results raw output
+print(r'\begin{align*}')
+print(r'&\sigma_a = \frac{' + str(F_col) + r'}{' + str(Area[0]) + r'} =' + str(F_col/Area[0]) + r'\text{ Pa} \\')
+print(r'&\sigma_b = \frac{' + str(round(M)) + r'}{' + str(S[0]) + r'} = ' + str(M/S[0]) + r'\text{ Pa} \\')
+print(r'&\frac{\sigma_a + \sigma_b}{\sigma_{allow}} = ' + str(round((F_col/Area[0] + M/S[0])/sigma_allow,2)))
+print(r'\end{align*}')
+#+END_SRC
+
+#+RESULTS:
+\begin{align*}
+&\sigma_a = \frac{50000.0}{0.0189} =2645502.6455026455\text{ Pa} \\
+&\sigma_b = \frac{50000}{0.00326} = 15337423.312883437\text{ Pa} \\
+&\frac{\sigma_a + \sigma_b}{\sigma_{allow}} = 0.18
+\end{align*}
+
+** Solution
+
+  Use data table to generate results
+
+\small
+#+BEGIN_SRC python :results output raw :session column-bending :exports results
+print(r'\begin{tabular}{lccc}')
+print(r'\toprule')
+print(r'Designation & Axial Stress & Bending Stress & $\dfrac{\sigma _a + \sigma_b}{\sigma_{allow}}$ \\')
+print(r'\midrule')
+for i in [0,1,2,3,4,5]:
+  print(r'%s & %.2e & %.2e & %.2f \\' % (designation[i], F_col/Area[i], M/S[i], (F_col/Area[i] + M/S[i])/sigma_allow))
+print(r'\bottomrule')
+print(r'\end{tabular}')
+#+END_SRC
+
+#+RESULTS:
+\begin{tabular}{lccc}
+\toprule
+Designation & Axial Stress & Bending Stress & $\dfrac{\sigma _a + \sigma_b}{\sigma_{allow}}$ \\
+\midrule
+S610 x 149 & 2.65e+06 & 1.53e+07 & 0.18 \\
+S510 x 143 & 2.75e+06 & 1.85e+07 & 0.21 \\
+S460 x 104 & 3.79e+06 & 2.96e+07 & 0.33 \\
+S380 x 74 & 5.27e+06 & 4.72e+07 & 0.52 \\
+S310 x 74 & 5.31e+06 & 6.03e+07 & 0.66 \\
+S250 x 52 & 7.52e+06 & 1.04e+08 & 1.11 \\
+\bottomrule
+\end{tabular}
+
+\normalsize
+In this case, S310 x 74 is our pick.
+
+# ** {Wooden Columns}
+#
+#   - Slenderness ratio from $h$, the smallest dimension of the cross section
+#     $$ \text{slenderness ratio} = \lambda = \frac{KL}{h}$$
+#   - Design equation dependent on properties: $E, S_y$
+#
+#
+# % ** {Wooden Column Design Equations}
+#
+#   - For wood with $S_{uc}$ = 8.27 MPa and $E$ = 12.4 GPa
+#
+#   \begin{equation*}
+#   \sigma_{allow} = \left\{
+#     \begin{array}{l c}
+#       8.27 \times 10^6 & 0 \leqslant \lambda \leqslant 11 \\
+#       8.27 \times 10^6\left[ 1 - \dfrac{1}{3} \left( \dfrac{\lambda}{26} \right)^2 \right] & 11 \leqslant \lambda \leqslant 26 \\
+#       \dfrac{3.72 \times 10^9}{\lambda^2} & 26 \leqslant \lambda \leqslant 50
+#     \end{array} \right.
+# \end{equation*}
+#
+# % ** {Wooden Columns}
+#   \footnotesize
+#   \begin{tikzpicture}
+#     \begin{axis}[
+#       width=0.9\textwidth,
+#       height=.6\textwidth,
+#       xmin=0,xmax=50,
+#       xlabel={$\lambda$},
+#       ylabel={$\dfrac{\sigma_{allow}}{S_{uc}}$},
+#       ylabel style={rotate=-90},
+#       cycle list name=exotic,
+#       samples=100,
+#       no markers,
+#       every axis plot/.append style={thick},
+#       ]
+#       \addplot [domain=0:11, DarkBlue]{1} node[midway, below]{short};
+#       \addplot [domain=11:26, DarkRed]{(1-1/3*(x/26)^2)} node[midway, above right]{medium};
+#       \addplot [domain=26:50, DarkGrey!20!Black] {450/x^2} node[midway, above right]{long};
+#     \end{axis}
+#   \end{tikzpicture}
+#
+# % ** {Aluminum Columns}
+#
+#   - For 2014-T6 Aluminum $S_y$ = 193 MPa, $E$ = 70 GPa
+#
+#   \begin{equation*}
+#     \sigma_{allow} = \left\{
+#       \begin{array}{l c}
+#         1.93 \times 10^8 &  0 \leqslant \lambda \leqslant 12 \\[20pt]
+#         2.12 \times 10^8 - 1.59 \times 10^6 \lambda & 12 \leqslant \lambda \leqslant 55 \\[20pt]
+#         \dfrac{3.72 \times 10^{11}}{\lambda^2} & 55 \leqslant \lambda
+#       \end{array} \right.
+#   \end{equation*}
+#
+# % ** {Aluminum Column Design Equations}
+#   \scriptsize
+#   \begin{tikzpicture}
+#     \begin{axis}[
+#       width=0.9\textwidth,
+#       height=.6\textwidth,
+#       xmin=0,xmax=100,
+#       xlabel={$\lambda$},
+#       ylabel={$\dfrac{\sigma_{allow}}{S_{comp}}$},
+#       ylabel style={rotate=-90},
+#       cycle list name=exotic,
+#       samples=100,
+#       no markers,
+#       every axis plot/.append style={thick},
+#       ]
+#       \addplot [domain=0:12, DarkBlue]{1} node[midway, below]{short};
+#       \addplot [domain=12:55, DarkRed]{(2.12*10^8-1.59*10^6*x)/(1.93*10^8)} node[midway, above right]{medium};
+#       \addplot [domain=55:100, DarkGrey!20!Black] {1928/x^2} node[midway, above right]{long};
+#     \end{axis}
+#   \end{tikzpicture}
+#
+# % ** {Column Design Procedures}
+#   \scriptsize
+#   \centering
+#   \adjustbox{valign=t}{
+#     \begin{tikzpicture}[>=latex, every node/.style={fill=LightSkyBlue}]
+#       \node[draw](load){Determine Compressive Load};
+#       \node [yshift=1cm, fill=none] {\normalsize Theory};
+#       \node[draw, yshift=-1cm, xshift=0cm](ratio){$\lambda_c$};
+#       \node[draw, yshift=-2cm, xshift=-1cm, text width=1.3cm, align=center](buckling){Buckling Design};
+#       \node[draw, yshift=-2cm, xshift=1cm, text width=1.3cm, align=center](comp){Strength Design};
+#       \node[draw, yshift=-3cm, xshift=0cm](check){Check slenderness ratio};
+#       \draw[->] (load) -- (ratio);
+#       \draw[->] (ratio) -- (buckling) node[midway, left, fill=none]{More};
+#       \draw[->] (ratio) -- (comp) node[midway, right, fill=none]{Less};
+#       \draw[->] (buckling) -- (check);
+#       \draw[->] (comp) -- (check);
+#     \end{tikzpicture}
+#   }
+#   \hspace{1cm}
+#   \adjustbox{valign=t}{
+#     \begin{tikzpicture}[>=latex, every node/.style={fill=LightSkyBlue}]
+#       \node[draw](load){Determine Compressive Load};
+#       \node [yshift=1cm, fill=none] {\normalsize Practical};
+#       \node[draw, yshift=-1cm, xshift=0cm](ratio){Evaluate slenderness};
+#       \node[draw, yshift=-2cm, xshift=0cm, text width=1.3cm, align=center](comp){Design Equation};
+#       \node[draw, yshift=-3cm, xshift=0cm](spread){Spreadsheet};
+#       \node[draw, yshift=-4cm, xshift=0cm](check){Check slenderness ratio};
+#       \draw[->] (load) -- (ratio);
+#       \draw[->] (ratio) -- (comp);
+#       \draw[->] (comp) -- (spread);
+#       \draw[->] (spread) -- (check);
+#     \end{tikzpicture}
+#   }
+#
+
+* Shaft Design
+
+** Shaft Loading Conditions
+
+ - Torque
+ - Bending $\implies$ radial load from torque transmission
+
+ [[./pictures/torque-transmission.png]]
+
+$$ F = \dfrac{T}{r \cos \theta} \hspace{1cm} F = \dfrac{T}{r} \hspace{1cm} F_1 - F_2 = \dfrac{T}{r} $$
+
+** Example: Timing Belt Shaft
+
+Size the shaft (AISI 1040, $S_y$ = 400 MPa, $S_{ut}$ = 600 MPa) using
+
+1. MDET
+2. Soderberg theory
+
+ \centering
+ \includegraphics[width=0.7\textwidth]{pictures/shaft-sizing}
+
+** General Guidelines
+
+1. shaft should be as short as possible
+2. avoid sharp step
+3. round shaft if possible
+4. to save weight $\rightarrow$ hollow shaft
+
+** Typical Shaft Design Equation
+  Using stress constraints and MDET
+
+  $$ d = \left( \dfrac{4 N_s}{\pi S_y} \sqrt{(8M + Fd)^2 + 48T^2} \right)^{1/3} $$
+
+# ** {Hollow shafts -- weight control}
+#   \scriptsize
+#   \begin{tikzpicture}
+#     \begin{axis}[
+#       width=\textwidth,
+#       height=.6\textwidth,
+#       xmin=0,xmax=1,
+#       ymin=0,ymax=3,
+#       ytick distance=0.5,
+#       xlabel={$k = \dfrac{r_i}{r_o}$},
+#       ylabel={Comparison to solid shaft},
+#       samples=100,
+#       domain=0:0.99,
+#       no markers,
+#       grid=both,
+#       every axis plot/.append style={thick},
+#       ]
+#       \addplot {1/sqrt(1-x^2)} node[near start, left]{Outer radius};
+#       \addplot {1/((1-x^4)/(1-x^2)^(3/2))} node[midway, above right]{Stress};
+#       \addplot {1/((1-x^4)/(1-x^2)^2)} node[midway, below left]{Deflection};
+#     \end{axis}
+#   \end{tikzpicture}
+#
+# % ** {Hollow shafts -- strength control}
+#   \scriptsize
+#   \begin{tikzpicture}
+#     \begin{axis}[
+#       width=\textwidth,
+#       height=.6\textwidth,
+#       xmin=0,xmax=1,
+#       ymin=0,ymax=3,
+#       ytick distance=0.5,
+#       xlabel={$k = \dfrac{r_i}{r_o}$},
+#       ylabel={Comparison to solid shaft},
+#       samples=100,
+#       domain=0:0.99,
+#       no markers,
+#       grid=both,
+#       every axis plot/.append style={thick},
+#       ]
+#       \addplot {1/sqrt(1-x^2)} node[near start, left]{Outer radius};
+#       \addplot {(1-x^2)/(1-x^4)^(2/3)} node[midway, above right]{Mass};
+#     \end{axis}
+#   \end{tikzpicture}

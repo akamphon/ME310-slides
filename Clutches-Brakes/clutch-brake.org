@@ -1,0 +1,507 @@
+#+TITLE: Clutches and Brakes
+#+AUTHOR: Sappinandana Akamphon
+
+#+OPTIONS: toc:t timestamp:nil num:t
+#+OPTIONS: reveal_width:1280 reveal_height:1024
+#+OPTIONS: reveal_single_file:t
+#+REVEAL_THEME: solarized
+#+REVEAL_TRANS: slide
+
+#+OPTIONS: H:2
+#+STARTUP: beamer
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [10pt, svgnames]
+#+BEAMER_THEME: metropolis
+#+LATEX_COMPILER: lualatex
+#+BEAMER_HEADER: \usepackage{booktabs}
+#+BEAMER_HEADER: \usepackage{pgfplots}
+#+BEAMER_HEADER: \usepgfplotslibrary{fillbetween}
+#+BEAMER_HEADER: \institute{Department of Mechanical Engineering, TSE}
+#+BEAMER_HEADER: \date{}
+#+BEAMER_HEADER: \AtBeginSection[]{\begin{frame}{Outline}\tableofcontents[currentsection]\end{frame}}
+
+* Clutches + Brakes
+
+** Clutches and Brakes
+
+- Rely on friction to transfer torque
+- Easy to engage/disengage
+
+** Clutches vs Brakes
+
+when engaged
+
+- Clutches :: $\omega_{in} = \omega_{out} \neq 0$
+- Brakes :: $\omega_{in} = \omega_{out} = 0$
+
+** Considerations for Clutch and Brake
+
+- Actuating force :: force to engage clutch/brake
+- Transmitted torque :: torque through mechanism
+- Energy loss :: energy dissipated before mechanism is fully engaged
+- Temperature rise :: temperature increase from energy loss
+
+* Types of Clutches and Brakes
+
+** Drum Brakes
+
+#+ATTR_LATEX: :width \textwidth
+  [[./pictures/drum-brake.png]]
+
+** Disc Brakes
+
+#+ATTR_LATEX: :height 0.9\textheight
+#+ATTR_HTML: :width 50%
+  [[./pictures/disc-brake.png]]
+
+** Band Brakes
+
+#+ATTR_LATEX: :height 0.9\textheight
+#+ATTR_HTML: :width 45%
+  [[./pictures/band-brake.jpg]]
+
+* Brake Linings
+
+** Materials
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/molded-lining.jpg]]
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/woven-lining.jpg]]
+#+ATTR_LATEX: :width 0.3\textwidth :center
+[[./pictures/sintered-lining.jpg]]
+#+END_CENTER
+
+- Molded :: thermosetting polymer or rubber + heat resistant fibers
+- Woven :: fibers + brass or zinc woven into fabric + resin
+- Sintered metal :: metal powder + inorganic fillers molded and sintered
+
+** Dry Linings
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/dry-materials.png]]
+
+** Wet Linings
+
+#+ATTR_LATEX: :width 0.8\textwidth
+#+ATTR_HTML: :width 80%
+[[./pictures/wet-materials.png]]
+
+* Drum Brake
+
+** Internal Drum Brake
+
+# +REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+# +ATTR_HTML: :width 100%
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LATEX: :width 1.1\textwidth
+[[./pictures/internal-drum-brake.png]]
+# +REVEAL_HTML: </div>
+
+# +REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+
+- Considering moments about $A$ \rightarrow 3 moments
+
+  - moment from normal force, $M_{n}$
+  - moment from friction, $M_{f}$
+  - moment from actuating force, $Fc$
+
+# +REVEAL_HTML: </div>
+
+** Pressure Distribution on Drum
+
+\begin{tikzpicture}
+    \begin{axis}[
+      width=0.8\textwidth,
+      height=.5\textwidth,
+      xmin=0,xmax=3.5,
+      ymin=0,
+      xlabel={$\theta$},
+      ylabel={$p$},
+      ytick={0,0.5,1},
+      yticklabels={0,0.5$p_{\max}$,$p_{\max}$},
+      xtick={0,pi/6,pi/4,pi/2,3*pi/4,5*pi/6,pi},
+      xticklabels={0,$\theta_{1}$, $\frac{\pi}{4}$, $\frac{\pi}{2}$ , $\frac{3\pi}{4}$,$\theta_{2}$,$\pi$},
+      ]
+      \addplot [very thick, domain=0:pi, name path=A] {sin(x*180/pi)};
+      \addplot [name path=B]{0};
+      \addplot[fill=blue, fill opacity=0.2] fill between[of=A and B, soft clip={domain=pi/6:5*pi/6}];
+    \end{axis}
+  \end{tikzpicture}
+\begin{align*}
+    p &= \frac{p_{\max}}{(\sin \theta)_{\max}} \sin \theta
+\end{align*}
+
+- $(\sin \theta)_{\max}$ = maximum value of \sin \theta for $\theta_{1} \leqslant \theta \leqslant \theta_{2}$ (not always 1)
+
+** Moment Generated on Drum by Normal Force
+
+\begin{align*}
+    M_n &= \int_{\theta_1}^{\theta_2} dN (a \sin \theta) \\
+    dN &= p (r d\theta) b \\
+    dN &= \frac{p_{\max} br \sin \theta d\theta}{(\sin \theta)_{\max}} \\
+    M_n &= \int_{\theta_1}^{\theta_2} \frac{p_{\max} bra \sin^2 \theta}{(\sin \theta)_{\max}} d\theta \\
+        &= \frac{p_{\max} bra}{(\sin \theta)_{\max}} \int_{\theta_1}^{\theta_2} \sin^2 \theta d\theta \\
+        &= \frac{p_{\max} bra}{4(\sin \theta)_{\max}} [2(\theta_2 - \theta_1) - \sin 2\theta_2 + \sin 2\theta_1]
+\end{align*}
+
+** Moment Generated on Drum by Friction
+
+\begin{align*}
+    M_f &= \int_{\theta_1}^{\theta_2} \mu dN (r - a \cos \theta) \\
+        &= \int_{\theta_1}^{\theta_2} \frac{\mu p_{\max} \sin \theta r d\theta b (r - a \cos \theta)}{(\sin \theta)_{\max}} \\
+        &= \frac{\mu p_{\max} br}{(\sin \theta)_{\max}} \left[ r( \cos \theta_1 - \cos \theta_2) + \frac{a}{4}(\cos 2\theta_2 - \cos 2\theta_1) \right]
+\end{align*}
+
+** Required Actuating Force $F$
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+#+ATTR_LATEX: :width 1.1\textwidth
+[[./pictures/internal-drum-brake.png]]
+# +REVEAL_HTML: </div>
+
+# +REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+\begin{align*}
+    F &= \frac{M_{n} - M_{f}}{c}
+\end{align*}
+
+- If the rotation is reversed, how are the moments changed?
+
+** Self-energizing Brake
+
+- if $M_f \geqslant M_n$, the brake is *self-energizing*
+- Moment from friction further presses the shoe against the drum \rightarrow more braking torque
+- The shoe sticks to the drum *without* actuating force $F$
+
+** Torque Generated on the Drum
+
+\begin{align*}
+    T &= \int_{\theta_1}^{\theta_2} \mu r dN \\
+        &= \frac{\mu r^2 bp_{\max}}{(\sin \theta)_{\max}} \int_{\theta_1}^{\theta_2} \sin \theta d\theta \\
+        &= \frac{\mu r^2 bp_{\max}}{(\sin \theta)_{\max}} (-\cos \theta)|_{\theta_1}^{\theta_2} \\
+        &= \frac{\mu r^2 bp_{\max}}{(\sin \theta)_{\max}} (\cos \theta_1 - \cos \theta_2) \\
+\end{align*}
+
+** External Drum Brake
+
+#+ATTR_LATEX: :height 0.9\textheight
+#+ATTR_HTML: :width 60%
+[[./pictures/external-drum-brake.png]]
+
+** Required Actuating Force $F$
+
+- Normal force flip direction
+
+\begin{align*}
+    F = \frac{M_{n} + M_{f}}{c}
+\end{align*}
+
+- Self-energizing *NOT* possible
+
+** Torque Generated on the Drum
+
+- identical equations to internal drum brake, only need to be careful about the direction of actuating force
+
+** Example: Braking torque of a drum brake
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+[[./pictures/drum-example.png]]
+#+REVEAL_HTML: </div>
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+- $F$ = 2000 N
+- $\mu$ = 0.3
+- $b$ = 3 cm
+
+Determine the braking torque.
+#+REVEAL_HTML: </div>
+
+** Solution
+
+First, we must determine $p_{\max}$ on the right shoe. In this case, $M_n$ and $M_f$ go in opposite directions.
+
+\begin{align*}
+    Fc &= M_n - M_f \\
+    M_n &= \frac{p_{\max} bra}{4(\sin \theta)_{\max}} [2(\theta_2 - \theta_1) - \sin 2\theta_2 + \sin 2\theta_1]
+\end{align*}
+
+** Solution
+
+Let us first find $M_n$ as a function of $p_{\max}$
+
+\begin{align*}
+    a &= \sqrt{ 0.112^2 + 0.05^2 } = 0.123 \text{ m} \\
+    M_n &= \frac{p_{\max} bra}{4(\sin \theta)_{\max}} [2(\theta_2 - \theta_1) - \sin 2\theta_2 + \sin 2\theta_1] \\
+        &= \frac{p_{\max} (0.03)(0.15)(0.123)}{4 (\sin 90^{\circ})} \left[ 2(126^{\circ}(\frac{\pi}{180^{\circ}})) - \sin (2(126^{\circ})) \right] \\
+        &= 7.38 \times 10^{-4} p_{\max}
+\end{align*}
+
+** Solution
+
+Now find $M_f$ as a function of $p_{\max}$
+
+\begin{align*}
+    M_f &= \frac{\mu p_{\max} br}{(\sin \theta)_{\max}} \left[ r( \cos \theta_1 - \cos \theta_2) + \frac{a}{4}(\cos 2\theta_2 - \cos 2\theta_1) \right] \\
+        &= \frac{0.3 p_{\max} (0.03)(0.15)}{\sin 90^{\circ}} \left[ (0.15)(\cos 0 - \cos 126^{\circ}) + \right. \\
+         & \left. \frac{0.123}{4}(\cos 2(126^{\circ}) - \cos 2(0)) \right] \\
+        &= 2.67 \times 10^{-4} p_{\max}
+\end{align*}
+
+** Solution
+
+\begin{align*}
+    Fc &= M_n - M_f \\
+    2000(0.212) &= p_{\max}(7.38 - 2.67) \times 10^{-4} \\
+    p_{\max} &= 9.00 \times 10^5 \text{ Pa}
+\end{align*}
+
+** Solution
+
+Braking torque of the right shoe is
+
+\begin{align*}
+    T_R &= \frac{\mu r^2 bp_{\max}}{(\sin \theta)_{\max}} (\cos \theta_1 - \cos \theta_2) \\
+        &= \frac{(0.3)(0.15^2)(0.03)(9.00 \times 10^5)}{1} (\cos 0^{\circ} - \cos 126^{\circ}) \\
+        &= 289 \text{ N-m}
+\end{align*}
+
+** Solution
+
+To calculate braking torque in left shoe, we also must calculate $p_{\max}$. $M_n$ and $M_f$ are now both clockwise.
+
+\begin{align*}
+    Fc &= M_n + M_f \\
+    2000(0.212) &= (7.38 + 2.67) \times 10^{-4} p_{\max} \\
+    p_{\max} &= 4.22 \times 10^5 \text{ Pa}
+\end{align*}
+
+** Solution
+
+Braking torque of the left shoe is
+
+\begin{align*}
+    T_L &= \frac{\mu r^2 bp_{\max}}{(\sin \theta)_{\max}} (\cos \theta_1 - \cos \theta_2) \\
+        &= \frac{(0.3)(0.15^2)(0.03)(4.22 \times 10^5)}{1} (\cos 0^{\circ} - \cos 126^{\circ}) \\
+        &= 136 \text{ N-m}
+\end{align*}
+
+** Solution
+
+Total braking torque is
+
+\begin{align*}
+    T &= T_L + T_R \\
+        &= 289 + 136 = 425 \text{ N-m}
+\end{align*}
+
+* Band Brakes
+
+** Principles of Band Brakes
+
+- Rely on friction between band and drum
+- Similar to pulley-belt system
+
+\begin{align*}
+    T = (F_1 - F_2)r
+\end{align*}
+
+** Belt Tension
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.7
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+#+ATTR_LATEX: :height 0.8\textheight
+[[./pictures/band-brake.png]]
+#+REVEAL_HTML: </div>
+
+*** :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.3
+:END:
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+\begin{align*}
+  dF &= \mu dN \\
+  dN &= 2(F d\theta/2) = Fd\theta \\
+  \frac{dF}{F} &= \mu d\theta \\
+  \ln \frac{F_1}{F_2} &= \mu \theta \\
+  \frac{F_1}{F_2} &= e^{\mu\theta}
+\end{align*}
+#+REVEAL_HTML: </div>
+
+** Example: An Exercise Bike
+
+An exercise bike has an adjustable band brake on the wheel to provide different levels of resistance. What should the slack side belt tension be so that the biker can exercise with $T$ = 50 N-m. Take $\theta = 150^{\circ}$ and $\mu = 0.2$, the bike wheel $r = 50$ cm.
+
+#+ATTR_LATEX: :width 0.6\textwidth
+[[./pictures/exercise-bike-brake.png]]
+
+** Solution
+
+\begin{align*}
+    \frac{F_1}{F_2} &= e^{\mu\theta} \\
+    T &= (F_1 - F_2)r \\
+    T &= (e^{\mu \theta} - 1) F_2 r \\
+    F_2 &= \frac{50}{(e^{0.2(150(\pi/180))}) - 1)(0.5)} \\
+        &= 145.3 \text{ N}
+\end{align*}
+
+* Disc Clutches and Brakes
+
+** Working Principles
+
+#+ATTR_LATEX: :width \textwidth
+[[./pictures/disc-brake-components.png]]
+
+** Pressure Distribution
+
+- New disc is flat, resulting in uniform pressure
+- Outer area wears faster because of higher velocity
+- After a while, pressure is no longer uniform, but wear becomes uniform
+
+** Torque Calculation
+
+1. Uniform pressure: new disc
+2. Uniform wear: old disc
+
+** Torque Calculation: Uniform Pressure
+
+
+\begin{align*}
+    dF &= p dA \\
+    dT &= \mu rdF = \mu r p dA \\
+    T &= \int_{r_i}^{r_o} \int_0^{2\pi} \mu r p (rdrd\theta) \\
+        &= \frac{2}{3} \mu \pi p \left( r_o^3 - r_i^3 \right)
+\end{align*}
+
+- For $n$ identical discs
+    \begin{align*}
+    T &= \frac{2}{3} n \mu \pi p \left( r_o^3 - r_i^3 \right)
+    \end{align*}
+
+** Required Actuating Force for Uniform Pressure
+
+[[./pictures/disc-brake-components.png]]
+
+  \begin{align*}
+    F &= pA \\
+    &= p n \pi \left( r_{o}^{2} - r_{i}^{2} \right)
+  \end{align*}
+
+** Uniform Pressure (cont.)
+
+- Substitute into $p = F / n \pi (r_o^2 - r_i^2)$ into $T$ equation
+
+\begin{align*}
+T &= \frac{2}{3} n \mu \pi p \left( r_o^3 - r_i^3 \right) \\
+&= \frac{2}{3} n \mu \pi \left( r_o^3 - r_i^3 \right) \frac{F}{n \pi (r_o^2 - r_i^2)} \\
+&= \frac{2\mu F \left( r_o^3 - r_i^3 \right)}{3 \left( r_o^2 - r_i^2 \right)}
+\end{align*}
+
+** Uniform Rate of Wear
+
+- Rate of Wear $\propto$ Friction Work Rate
+
+    $$ pr = C $$
+
+- Max pressure occurs at inside radius, hence the constant is
+
+    $$ pr = C = p_{\max}r_i $$
+
+** Required Actuating Force: Uniform Wear
+
+\begin{align*}
+    dF &= pdA = prdrd\theta \\
+     F &= p_{\max} r_{i} \int_{r_{i}}^{r_{o}} \int_{0}^{2\pi} dr d\theta \\
+       &= 2p_{\max} r_{i} \pi(r_{o} - r_{i})
+\end{align*}
+
+- For $n$ parallel discs
+
+  \begin{align*}
+    F = 2np_{\max}r_{i} \pi(r_{o} - r_{i})
+  \end{align*}
+
+** Torque Calculation: Uniform Wear
+
+\begin{align*}
+    dF &= pdA \\
+    dT &= \mu r dF = \mu r p dA = \mu p_{\max} r_i dA \\
+    T &= p_{\max} r_i \int_{r_i}^{r_o} \int_0^{2\pi} r dr d\theta \\
+        &= \mu \pi p_{\max} r_i \left( r_o^2 - r_i^2 \right)
+\end{align*}
+
+- For $n$ parallel discs
+
+  $$ T = \mu \pi np_{\max} r_i \left( r_o^2 - r_i^2 \right) $$
+
+** Torque Calculation: Uniform Wear (cont)
+
+- Taking into account actuating force by substituting $p_{\max}r_{i} = F / 2n \pi (r_{o} - r_{i})$ in $T$
+
+  \begin{align*}
+    T &= \mu \pi np_{\max} r_i \left( r_o^2 - r_i^2 \right) \\
+      &= \mu \pi n \left( r_o^2 - r_i^2 \right) \frac{F}{2n \pi (r_{o} - r_{i})} \\
+      &= \mu F \left( \frac{r_{o} + r_{i}}{2} \right)
+  \end{align*}
+
+** Usual Guideline for Disc Brakes/Clutches
+
+1. $0.45r_o < r_i < 0.8r_o$
+2. Use uniform wear rate, unless for short-term application
+
+** Example: Automotive Clutch
+
+Design a wet clutch to transfer the torque of 100 N-m using the material with $\mu$ = 0.08 and $p_{\max}$ = 1500 kPa. Space requirements only allow $r_o \leqslant$ 60 mm. Determine the inner diameter and number of parallel discs.
+
+** Solution
+
+- Take $r_{i} = 0.5r_{o}$ = 30 mm
+
+\begin{align*}
+    n &= \frac{T}{\left[ \mu \pi p_{\max} r_i \left( r_o^2 - r_i^2 \right) \right]} \\
+        &= \frac{100}{\left[ (0.08)\pi(1500 \times 10^3)(0.03) \left( 0.06^2 - 0.03^2 \right) \right]}
+\end{align*}
+
+$N$ = 4 and $d_i = 2r_i$ = 60 mm
+
+** Drum Brakes vs Disc Brakes
+
+#+ATTR_LATEX: :booktabs t :align p{5cm}p{5cm}
+#+ATTR_HTML: :border 0 :rules none
+|--------------------------------------------+-----------------------------------------------------------------------|
+| Drum                                       | Disc                                                                  |
+|--------------------------------------------+-----------------------------------------------------------------------|
+| self-energizing possible                   | no self-energizing                                                    |
+|--------------------------------------------+-----------------------------------------------------------------------|
+| very sensitive to $\mu$                    | less sensitive to $\mu$                                               |
+|--------------------------------------------+-----------------------------------------------------------------------|
+| requires larger force once $\mu$ goes down | well-designed caliper compensate for wear and exert constant pressure |
+|--------------------------------------------+-----------------------------------------------------------------------|
